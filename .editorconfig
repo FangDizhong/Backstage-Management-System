@@ -1,4 +1,7 @@
 # https://editorconfig.org
+# 主要用于配置IDE,规范缩进风格，缩进大小，tab长度以及字符集等,解决不同IDE的编码范设置。
+# EditorConfig 插件会去查找当前编辑文件的所在文件夹或其上级文件夹中是否有 .editorconfig 文件。
+# 如果有，则编辑器的行为会与 .editorconfig 文件中定义的一致，并且其优先级高于编辑器自身的设置。
 
 root = true
 
