@@ -12,6 +12,7 @@ const { ElementPlusResolver } = require("unplugin-vue-components/resolvers")
 module.exports = {
   // 配置方式1：CLI提供的属性  https://cli.vuejs.org/zh/config/#vue-config-js
   outputDir: "./docs", //打包路径修改(默认为./dist)
+  // publicPath:"./", //修改加载资源的路径为相对路径，上传服务器时不用
 
   // 配置方式2：和webpack属性完全一致，最后进行合并
   configureWebpack: {
