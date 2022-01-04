@@ -13,7 +13,7 @@
         <el-input v-model="account.name" />
       </el-form-item>
       <el-form-item label="Password" prop="password">
-        <el-input v-model="account.password" />
+        <el-input v-model="account.password" show-password />
       </el-form-item>
     </el-form>
   </div>
@@ -24,20 +24,30 @@ import { defineComponent, reactive, ref } from "vue"
 import { rules } from "../config/account-config"
 // 为了使用ElForm类型
 import { ElForm } from "element-plus"
+import localCache from "@/utils/cache"
 
 export default defineComponent({
   setup() {
     // 表单双向绑定数据
     const account = reactive({
-      name: "",
-      password: ""
+      name: localCache.getCache("name") ?? "",
+      password: localCache.getCache("password") ?? ""
     })
+    // typeof把ElForm对象转成实例，InstanceType把实例转成类型
     const formRef = ref<InstanceType<typeof ElForm>>()
 
-    const loginAction = () => {
+    const loginAction = (isKeepPassword: boolean) => {
       formRef.value?.validate((valid) => {
         if (valid) {
-          console.log("执行登录逻辑")
+          // 1.判断是否记住密码
+          if (isKeepPassword) {
+            localCache.setCache("name", account.name)
+            localCache.setCache("password", account.password)
+          } else {
+            localCache.deleteCache("name")
+            localCache.deleteCache("password")
+          }
+          // 2.进行登录验证
         }
       })
     }

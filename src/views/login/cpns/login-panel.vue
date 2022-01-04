@@ -42,11 +42,11 @@ export default defineComponent({
   },
   setup() {
     const isKeepPassword = ref(true)
-    // 把子组件(本质是对象)变成type的TS写法
+    // typeof把LoginAccount对象转成实例，InstanceType把实例转成类型
     const accountRef = ref<InstanceType<typeof LoginAccount>>()
 
     const handleLoginClick = () => {
-      accountRef.value?.loginAction()
+      accountRef.value?.loginAction(isKeepPassword.value)
     }
     return {
       isKeepPassword,
