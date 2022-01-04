@@ -2,7 +2,8 @@ import FDZRequest from "./request"
 import { BASE_URL, TIME_OUT } from "./request/config"
 
 // service统一出口，命名加自定义前缀
-// 每次执行fdzRequest都是new一个FDZRequest实例，传入基本配置
+// 每次执行fdzRequest都是new一个FDZRequest实例，
+//传入基本配置,和临时携带的配置
 const fdzRequest = new FDZRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,

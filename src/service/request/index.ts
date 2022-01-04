@@ -24,7 +24,7 @@ class FDZRequest {
     this._interceptors = config.interceptors
     this._showLoading = config.showLoading ?? DEFAULT_LOADING
 
-    //对应实例传入config放入this._interceptors的拦截器
+    //执行对应实例传入config放入this._interceptors的拦截器函数
     this._instance.interceptors.request.use(
       this._interceptors?.requestInterceptor,
       this._interceptors?.requestInterceptorCatch
@@ -34,7 +34,7 @@ class FDZRequest {
       this._interceptors?.responseInterceptorCatch
     )
 
-    // 所有new出的实例共同都自带的拦截器
+    // 所有new出的实例共同都自带的拦截器函数
     this._instance.interceptors.request.use(
       (config) => {
         console.log("所有实例共同都自带的拦截器：请求拦截成功")
