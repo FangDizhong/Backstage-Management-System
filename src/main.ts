@@ -5,7 +5,7 @@ import store from "./store"
 
 //不需要了，因为用了unplugin-vue-components & unplugin-auto-import
 // element-plus按需引入2
-import { globalRegister } from "./global"
+// import { globalRegister } from "./global"
 
 // css初始化
 import "normalize.css"
@@ -26,7 +26,8 @@ app.use(router)
 //不需要了，因为用了unplugin-vue-components & unplugin-auto-import
 // element-plus按需引入2
 // globalRegister(app) //两种写法都可以
-app.use(globalRegister)
+//不需要了，因为用了unplugin-icons
+// app.use(globalRegister)
 
 app.mount("#app")
 

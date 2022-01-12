@@ -6,7 +6,8 @@
       <el-tab-pane>
         <template #label>
           <span>
-            <el-icon><user-filled /></el-icon> Account
+            <!-- <el-icon><user-filled /></el-icon> Account -->
+            <i-ep-user-filled /> Account
           </span>
         </template>
         <LoginAccount ref="accountRef" />
@@ -14,7 +15,8 @@
       <el-tab-pane>
         <template #label>
           <span>
-            <el-icon><iphone /></el-icon> Phone
+            <!-- <el-icon><iphone /></el-icon> Phone -->
+            <i-ep-iphone /> Phone
           </span>
         </template>
         <LoginPhone />

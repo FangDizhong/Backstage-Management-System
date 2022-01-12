@@ -1,6 +1,7 @@
 <template>
   <div class="login">
     <login-panel />
+    <HelloWorld msg="vandezone" />
   </div>
 </template>
 

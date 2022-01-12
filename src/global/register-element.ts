@@ -14,16 +14,17 @@
 //   }
 // }
 
-// Element-plus/icon-vue按需引入1
-import { App } from "vue"
-import { UserFilled, Iphone } from "@element-plus/icons-vue"
+// //不需要了，因为用了unplugin-icons的[ep]图标集
+// // Element-plus/icon-vue按需引入1
+// import { App } from "vue"
+// import { UserFilled, Iphone } from "@element-plus/icons-vue"
 
-//定义要注册的组件数组
-const elIcons = [UserFilled, Iphone]
+// //定义要注册的组件数组
+// const elIcons = [UserFilled, Iphone]
 
-// 用for循环注册
-export default function (app: App) {
-  for (const elIcon of elIcons) {
-    app.component(elIcon.name, elIcon)
-  }
-}
+// // 用for循环注册
+// export default function (app: App) {
+//   for (const elIcon of elIcons) {
+//     app.component(elIcon.name, elIcon)
+//   }
+// }
