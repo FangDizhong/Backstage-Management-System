@@ -4,17 +4,19 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    DarkMode: typeof import('./components/dark-mode.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
-    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElLink: typeof import('element-plus/es')['ElLink']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     IEpIphone: typeof import('~icons/ep/iphone')['default']
+    IEpMoon: typeof import('~icons/ep/moon')['default']
+    IEpSunny: typeof import('~icons/ep/sunny')['default']
     IEpUserFilled: typeof import('~icons/ep/user-filled')['default']
   }
 }

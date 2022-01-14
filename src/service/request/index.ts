@@ -37,7 +37,7 @@ class FDZRequest {
     // 所有new出的实例共同都自带的拦截器函数
     this._instance.interceptors.request.use(
       (config) => {
-        console.log("所有实例共同都自带的拦截器：请求拦截成功")
+        // console.log("所有实例共同都自带的拦截器：请求拦截成功")
 
         // 加载ElementPlus的ElLoading动画
         if (this._showLoading) {
@@ -51,14 +51,14 @@ class FDZRequest {
         return config
       },
       (err) => {
-        console.log("所有实例共同都自带的拦截器：请求拦截失败")
+        // console.log("所有实例共同都自带的拦截器：请求拦截失败")
         return err
       }
     )
 
     this._instance.interceptors.response.use(
       (res) => {
-        console.log("所有实例共同都自带的拦截器：响应拦截成功")
+        // console.log("所有实例共同都自带的拦截器：响应拦截成功")
 
         // 结束loading
         setTimeout(() => {
@@ -67,13 +67,13 @@ class FDZRequest {
 
         const data = res.data
         if (data.returnCode === "-1001") {
-          console.log("请求失败，错误信息")
+          // console.log("请求失败，错误信息")
         } else {
           return data
         }
       },
       (err) => {
-        console.log("所有实例共同都自带的拦截器：响应拦截失败")
+        // console.log("所有实例共同都自带的拦截器：响应拦截失败")
         // 例子：判断不同的HttpErrorCode显示不同的错误信息
         if (err.response.status === 404) {
           console.log("404的错误")
@@ -121,22 +121,22 @@ class FDZRequest {
   }
 
   // 封装一个get方法调用request方法(method为GET的情况)
-  get<T>(config: FDZRequestConfig<T>): Promise<T> {
+  get<T = any>(config: FDZRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: "GET" })
   }
 
   // 封装一个post方法调用request方法(method为POST的情况)
-  post<T>(config: FDZRequestConfig<T>): Promise<T> {
+  post<T = any>(config: FDZRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: "POST" })
   }
 
   // 封装一个delete方法调用request方法(method为DELETE的情况)
-  delete<T>(config: FDZRequestConfig<T>): Promise<T> {
+  delete<T = any>(config: FDZRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: "DELETE" })
   }
 
   // 封装一个patch方法调用request方法(method为PATCH的情况)
-  patch<T>(config: FDZRequestConfig<T>): Promise<T> {
+  patch<T = any>(config: FDZRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: "PATCH" })
   }
 }

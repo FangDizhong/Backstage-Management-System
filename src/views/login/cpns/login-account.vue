@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue"
+import { useStore } from "vuex"
 import { rules } from "../config/account-config"
 // 为了使用ElForm类型
 import { ElForm } from "element-plus"
@@ -28,6 +29,8 @@ import localCache from "@/utils/cache"
 
 export default defineComponent({
   setup() {
+    const store = useStore()
+
     // 表单双向绑定数据
     const account = reactive({
       name: localCache.getCache("name") ?? "",
@@ -48,6 +51,7 @@ export default defineComponent({
             localCache.deleteCache("password")
           }
           // 2.进行登录验证
+          store.dispatch("login/accountLoginAction", { ...account })
         }
       })
     }

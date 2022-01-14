@@ -1,7 +1,7 @@
 <template>
   <div class="login">
+    <dark-mode />
     <login-panel />
-    <HelloWorld msg="vandezone" />
   </div>
 </template>
 

@@ -22,9 +22,9 @@ export const rules = {
     },
     {
       // 规则2：^开头 $结尾 [a到z 0到9] {5到10个字符}
-      pattern: /^[a-z0-9]{8,}$/,
+      pattern: /^[a-z0-9]{6,}$/,
       message:
-        "Must be at least 8 characters using lowercase letters(a-z) or numbers(0-9)",
+        "Must be at least 6 characters using lowercase letters(a-z) or numbers(0-9)",
       trigger: "blur"
     }
   ]

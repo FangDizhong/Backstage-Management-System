@@ -1,10 +1,12 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
 // import Home from "../views/Home.vue";
 
+import localCache from "@/utils/cache"
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/login"
+    redirect: "/main"
   },
   {
     path: "/login",
@@ -38,6 +40,17 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+// 如果当前路径不是login页，
+// 则检查缓存里有没有login过留下来的token
+router.beforeEach((to) => {
+  if (to.path !== "/login") {
+    const token = localCache.getCache("token")
+    if (!token) {
+      return "/login"
+    }
+  }
 })
 
 export default router

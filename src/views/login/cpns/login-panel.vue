@@ -2,8 +2,8 @@
   <div class="login-panel">
     <h1 class="title">ASK Online</h1>
     <h4 class="title">Admin Login</h4>
-    <el-tabs type="border-card" stretch>
-      <el-tab-pane>
+    <el-tabs type="border-card" stretch v-model="currentTab">
+      <el-tab-pane name="account">
         <template #label>
           <span>
             <!-- <el-icon><user-filled /></el-icon> Account -->
@@ -12,14 +12,14 @@
         </template>
         <LoginAccount ref="accountRef" />
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="phone">
         <template #label>
           <span>
             <!-- <el-icon><iphone /></el-icon> Phone -->
             <i-ep-iphone /> Phone
           </span>
         </template>
-        <LoginPhone />
+        <LoginPhone ref="phoneRef" />
       </el-tab-pane>
     </el-tabs>
     <div class="account-control">
@@ -43,16 +43,26 @@ export default defineComponent({
     LoginPhone
   },
   setup() {
+    // 定义属性
     const isKeepPassword = ref(true)
     // typeof把LoginAccount对象转成实例，InstanceType把实例转成类型
     const accountRef = ref<InstanceType<typeof LoginAccount>>()
+    const phoneRef = ref<InstanceType<typeof LoginPhone>>()
+    const currentTab = ref("account")
 
+    // 定义方法
     const handleLoginClick = () => {
-      accountRef.value?.loginAction(isKeepPassword.value)
+      if (currentTab.value === "account") {
+        accountRef.value?.loginAction(isKeepPassword.value)
+      } else {
+        // phoneRef.value?.loginAction(isKeepPassword.value)
+      }
     }
     return {
       isKeepPassword,
       accountRef,
+      phoneRef,
+      currentTab,
       handleLoginClick
     }
   }
