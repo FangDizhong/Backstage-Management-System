@@ -2,7 +2,7 @@
   <el-button @click="toggleDark()">
     <i-ep-moon v-show="isDark" class="align-middle" />
     <i-ep-sunny v-show="!isDark" class="align-middle" />
-    <span class="ml-2">{{ isDark ? "Dark" : "Light" }}</span>
+    <!-- <span class="ml-2">{{ isDark ? "Dark" : "Light" }}</span> -->
   </el-button>
 </template>
 

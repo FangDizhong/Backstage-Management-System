@@ -11,6 +11,7 @@ import { setupStore } from "./store"
 // css初始化
 import "normalize.css"
 import "./assets/css/index.scss"
+import "windi.css"
 
 // axios_demo 不用起名字
 // import "./service/axios_demo"
@@ -22,8 +23,10 @@ import "./assets/css/index.scss"
 
 const app = createApp(App)
 app.use(store)
-app.use(router)
+// 原页面刷新时，从缓存里加载已login过的信息到vuex里
+// 先初始化数据,再注册路由,否则路由刷新跳转到not-found
 setupStore()
+app.use(router)
 
 //不需要了，因为用了unplugin-vue-components & unplugin-auto-import
 // element-plus按需引入2

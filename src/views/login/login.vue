@@ -1,6 +1,5 @@
 <template>
   <div class="login">
-    <dark-mode />
     <login-panel />
   </div>
 </template>
@@ -21,12 +20,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .login {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-
+  @apply flex justify-center items-center w-full h-full;
   background-image: repeating-radial-gradient(
     circle at top left,
     rgb(240, 249, 255) 0%,

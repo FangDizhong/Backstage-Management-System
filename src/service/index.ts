@@ -1,6 +1,8 @@
 import FDZRequest from "./request"
 import { BASE_URL, TIME_OUT } from "./request/config"
 
+import localStorage from "@/utils/local-save"
+
 // service统一出口，命名加自定义前缀
 // 每次执行fdzRequest都是new一个FDZRequest实例，
 //传入基本配置,和临时携带的配置
@@ -10,10 +12,11 @@ const fdzRequest = new FDZRequest({
   interceptors: {
     requestInterceptor: (config) => {
       // // 携带token的拦截
-      // const token = ""
-      // if (token) {
-      //   config.headers.Authorization = `Bearer ${token}`
-      // }
+      const token = localStorage.getSave("token")
+
+      if (token) {
+        config.headers!.Authorization = `Bearer ${token}`
+      }
       console.log("该实例传入请求成功的拦截")
       return config
     },

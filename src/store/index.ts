@@ -1,7 +1,7 @@
-import { createStore } from "vuex"
+import { createStore, Store, useStore as useVuexStore } from "vuex"
 
 import login from "./login/login"
-import { IRootState } from "./type"
+import { IRootState, IStoreType } from "./type"
 
 const store = createStore<IRootState>({
   // 保存状态
@@ -23,8 +23,15 @@ const store = createStore<IRootState>({
   }
 })
 
+// 原页面刷新时，从缓存里加载已login过的信息到vuex里
 export function setupStore() {
   store.dispatch("login/loadLocalLogin")
 }
 
+// 为了使vuex的useStore有类型提示：
+// 1. 定义了return回来的Store类型是自定义的<IStoreType>
+// 2. 把原先vuex的useStore重定类为useVuexStore
+export function useStore(): Store<IStoreType> {
+  return useVuexStore()
+}
 export default store

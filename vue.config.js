@@ -1,7 +1,7 @@
 // 修改webpack配置
 // node.js环境支持common.js的模块化规范，所以都这么写
 
-// const path = require("path");
+const path = require("path")
 
 // 配置ElementPlus按需引用地plugin
 // https://element-plus.org/zh-CN/guide/quickstart.html#%E6%8C%89%E9%9C%80%E5%AF%BC%E5%85%A5
@@ -20,7 +20,7 @@ module.exports = {
 
   // 配置跨域访问
   devServer: {
-    proxy:{
+    proxy: {
       "^/api": {
         target: "http://152.136.185.210:5000",
         pathRewrite: {
@@ -33,11 +33,13 @@ module.exports = {
 
   // 配置方式2：和webpack属性完全一致，最后进行合并
   configureWebpack: {
-    //   resolve :{
-    //     alias :{
-    //       components: "@/components"
-    //     }
-    //   },
+    // resolve :{
+    //   alias :{
+    //     '@': path.resolve(__dirname, 'src'),
+    //     // components: "@/components",
+    //     // views: '@/views'
+    //   }
+    // },
     plugins: [
       // https://github.com/antfu/unplugin-auto-import
       AutoImport({

@@ -5,8 +5,8 @@ import { IAccount, IDataType, ILoginResult } from "./type"
 // https://documenter.getpostman.com/view/12347168/TzsfmQvw#
 enum LoginAPI {
   AccountLogin = "/Login",
-  LoginUserInfo = "/",
-  UserMenus = "/"
+  LoginUserInfo = "/users/",
+  UserMenus = "/role/"
 }
 
 // login登录的网络请求逻辑
