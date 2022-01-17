@@ -5,7 +5,12 @@
       <span class="title">Ask Online</span>
     </div>
 
-    <el-menu default-active="2" class="el-menu-vertical">
+    <el-menu
+      default-active="2"
+      class="el-menu-vertical"
+      background-color="#1e293b"
+      text-color="#b7bdc3"
+    >
       <template v-for="item in userMenus" :key="item.id">
         <!-- type为1说明有下一级菜单 -->
         <template v-if="item.type === 1">
@@ -18,7 +23,7 @@
             </template>
             <!-- 二级菜单的下一级【内容】 -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item :index="subitem.id">
+              <el-menu-item :index="subitem.id + ''">
                 <template #title>
                   <i v-if="subitem.icon" :class="subitem.icon"></i>
                   <span>{{ subitem.name }}</span>
@@ -30,7 +35,7 @@
 
         <!-- type为2说明没有下一级菜单，直接展示 -->
         <template v-else-if="item.type === 2">
-          <el-menu-item :index="item.id">
+          <el-menu-item :index="item.id + ''">
             <template #title>
               <i v-if="item.icon" :class="item.icon"></i>
               <span>{{ item.name }}</span>
@@ -62,7 +67,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .nav-menu {
-  @apply h-full bg-dark-900;
+  @apply h-full bg-blue-gray-900;
 
   .logo {
     @apply flex flex-row justify-start items-center
@@ -72,6 +77,20 @@ export default defineComponent({
     }
     .title {
       @apply text-16px font-weight-700;
+    }
+  }
+  .el-menu {
+    @apply border-r-0;
+    // .el-sub-menu__title {
+    //   color: bisque !important;
+    //   background-color: blue !important;
+    //   // @apply text-red-100 hover:bg-blue-gray-800;
+    // }
+    .el-menu-item {
+      @apply pl-50px bg-blue-gray-700 hover:(text-white font-bold);
+    }
+    .el-menu-item.is-active {
+      @apply bg-blue-900 text-white;
     }
   }
 }
