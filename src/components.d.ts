@@ -20,12 +20,16 @@ declare module 'vue' {
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
+    FoldMenu: typeof import('./components/base-ui/fold-menu.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
+    IEpExpand: typeof import('~icons/ep/expand')['default']
+    IEpFold: typeof import('~icons/ep/fold')['default']
     IEpIphone: typeof import('~icons/ep/iphone')['default']
     IEpMonitor: typeof import('~icons/ep/monitor')['default']
     IEpMoon: typeof import('~icons/ep/moon')['default']
     IEpSunny: typeof import('~icons/ep/sunny')['default']
     IEpUserFilled: typeof import('~icons/ep/user-filled')['default']
+    NavHeader: typeof import('./components/nav-header/nav-header.vue')['default']
     NavMenu: typeof import('./components/nav-menu/nav-menu.vue')['default']
   }
 }

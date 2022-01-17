@@ -2,22 +2,17 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="@\assets\img\logo.svg" alt="logo" />
-      <span class="title">Ask Online</span>
+      <span class="title" v-show="!collapse">Ask Online</span>
     </div>
 
-    <el-menu
-      default-active="2"
-      class="el-menu-vertical"
-      background-color="#1e293b"
-      text-color="#b7bdc3"
-    >
+    <el-menu default-active="2" class="el-menu-vertical" :collapse="collapse">
       <template v-for="item in userMenus" :key="item.id">
         <!-- type为1说明有下一级菜单 -->
         <template v-if="item.type === 1">
           <!-- 二级菜单的下一级【标题】 -->
           <el-sub-menu :index="item.id + ''">
             <template #title>
-              <i v-if="item.icon" :class="item.icon"></i>
+              <!-- <i v-if="item.icon" :class="item.icon"></i> -->
               <i-ep-monitor />
               <span>{{ item.name }}</span>
             </template>
@@ -47,22 +42,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from "vue"
+<script setup lang="ts">
+import { defineProps, computed } from "vue"
 // vuex -ts 兼容=>pinia
 // import { useStore } from "vuex"
 // 用自己封装的useStore函数解决Vuex的TS兼容问题
 import { useStore } from "@/store"
-
-export default defineComponent({
-  setup() {
-    const store = useStore()
-    const userMenus = computed(() => store.state.login.userMenus)
-    return {
-      userMenus
-    }
+const props = defineProps({
+  collapse: {
+    type: Boolean,
+    default: false
   }
 })
+const store = useStore()
+const userMenus = computed(() => store.state.login.userMenus)
 </script>
 
 <style scoped lang="scss">
@@ -76,18 +69,23 @@ export default defineComponent({
       @apply h-full my-0 mx-10px;
     }
     .title {
-      @apply text-16px font-weight-700;
+      @apply text-16px font-weight-700
+      whitespace-nowrap;
     }
   }
   .el-menu {
     @apply border-r-0;
-    // .el-sub-menu__title {
-    //   color: bisque !important;
-    //   background-color: blue !important;
-    //   // @apply text-red-100 hover:bg-blue-gray-800;
-    // }
+
+    ::v-deep .el-sub-menu__title {
+      // color: bisque !important;
+      // background-color: blue !important;
+      @apply text-gray-300 bg-blue-gray-800
+      hover:bg-blue-gray-800;
+    }
     .el-menu-item {
-      @apply pl-50px bg-blue-gray-700 hover:(text-white font-bold);
+      @apply pl-50px
+       text-gray-300 bg-blue-gray-700
+       hover:(text-white font-bold);
     }
     .el-menu-item.is-active {
       @apply bg-blue-900 text-white;

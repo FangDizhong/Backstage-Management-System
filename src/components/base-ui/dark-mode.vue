@@ -1,9 +1,9 @@
 <template>
-  <el-button @click="toggleDark()">
+  <button class="toggle-dark-mode" @click="toggleDark()">
     <i-ep-moon v-show="isDark" class="align-middle" />
     <i-ep-sunny v-show="!isDark" class="align-middle" />
     <!-- <span class="ml-2">{{ isDark ? "Dark" : "Light" }}</span> -->
-  </el-button>
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -13,4 +13,8 @@ const isDark = useDark()
 const toggleDark = useToggle(isDark)
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.toggle-dark-mode {
+  @apply bg-opacity-0 p-2 h-full;
+}
+</style>
