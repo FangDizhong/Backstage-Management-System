@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { ref, Ref, inject } from "vue"
-import { useToggle } from "@vueuse/core"
+// import { useToggle } from "@vueuse/core"
 
 // 截取main.vue组件的isFolded函数
 const isFolded = inject("isFolded")
@@ -30,6 +30,6 @@ const toggleFold = () => {
 
 <style scoped lang="scss">
 .fold-menu {
-  @apply bg-opacity-0 p-2 h-full;
+  @apply bg-opacity-0 p-1.5 h-full;
 }
 </style>

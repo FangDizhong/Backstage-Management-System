@@ -13,7 +13,9 @@
         </el-header>
         <!-- 主体内容 -->
         <el-main class="page-content">
-          <router-view />
+          <div class="page-info">
+            <router-view />
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -53,8 +55,10 @@ provide("isFolded", isFolded)
         @apply h-48px p-0 flex;
       }
       .page-content {
-        @apply h-[calc(100%+48px)] bg-white bg-blue-gray-100
-        text-center;
+        @apply h-[calc(100%+48px)]  bg-blue-gray-100;
+        .page-info {
+          @apply bg-white text-center rounded-md;
+        }
       }
     }
   }

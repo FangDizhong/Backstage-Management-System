@@ -5,7 +5,11 @@
       <span class="title" v-show="!collapse">Ask Online</span>
     </div>
 
-    <el-menu default-active="2" class="el-menu-vertical" :collapse="collapse">
+    <el-menu
+      :default-active="defaultActiveMenu"
+      class="el-menu-vertical"
+      :collapse="collapse"
+    >
       <template v-for="item in userMenus" :key="item.id">
         <!-- type为1说明有下一级菜单 -->
         <template v-if="item.type === 1">
@@ -46,23 +50,36 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed } from "vue"
-import { useRouter } from "vue-router"
+import { defineProps, computed, ref } from "vue"
+import { useRouter, useRoute } from "vue-router"
+
 // vuex -ts 兼容=>pinia
 // import { useStore } from "vuex"
 // 用自己封装的useStore函数解决Vuex的TS兼容问题
 import { useStore } from "@/store"
-import user from "@/router/main/system/user/user"
+import { mapPathToMenu } from "@/utils/map-to-routes"
+
 const props = defineProps({
   collapse: {
     type: Boolean,
     default: false
   }
 })
+
+// store
 const store = useStore()
 const userMenus = computed(() => store.state.login.userMenus)
 
+// router
 const router = useRouter()
+const route = useRoute()
+const currentPath = route.path
+
+// menu
+const menu = mapPathToMenu(userMenus.value, currentPath)
+const defaultActiveMenu = ref(menu.id + "")
+
+// 点击跳转路由
 const handleMenuItemClick = (item: any) => {
   router.push({
     path: item.url ?? "/not-found"

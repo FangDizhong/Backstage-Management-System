@@ -33,3 +33,19 @@ export function mapMenusToRoutes(userMenus: any[]) {
   _recurseGetRoute(userMenus)
   return routes
 }
+
+export function mapPathToMenu(userMenus: any[], currentPath: string): any {
+  for (const menu of userMenus) {
+    if (menu.type === 1) {
+      // 一级菜单的话，要找它的下级菜单
+      // 没有值就传空数组给它遍历,换下一个menu
+      const foundMenu = mapPathToMenu(menu.children ?? [], currentPath)
+      // 如果已经找到menu,就返回值(意味着该函数结束)
+      if (foundMenu) {
+        return foundMenu
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu
+    }
+  }
+}

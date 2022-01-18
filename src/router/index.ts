@@ -48,6 +48,7 @@ const router = createRouter({
   routes
 })
 
+// 每次页面跳转前执行
 // 如果当前路径不是login页，
 // 则检查缓存里有没有login过留下来的token
 router.beforeEach((to) => {

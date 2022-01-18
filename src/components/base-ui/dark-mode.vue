@@ -15,6 +15,6 @@ const toggleDark = useToggle(isDark)
 
 <style scoped lang="scss">
 .toggle-dark-mode {
-  @apply bg-opacity-0 p-2 h-full;
+  @apply bg-opacity-0 p-1.5 h-full;
 }
 </style>
