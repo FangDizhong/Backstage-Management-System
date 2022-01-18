@@ -18,7 +18,10 @@
             </template>
             <!-- 二级菜单的下一级【内容】 -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item :index="subitem.id + ''">
+              <el-menu-item
+                :index="subitem.id + ''"
+                @click="handleMenuItemClick(subitem)"
+              >
                 <template #title>
                   <i v-if="subitem.icon" :class="subitem.icon"></i>
                   <span>{{ subitem.name }}</span>
@@ -44,10 +47,12 @@
 
 <script setup lang="ts">
 import { defineProps, computed } from "vue"
+import { useRouter } from "vue-router"
 // vuex -ts 兼容=>pinia
 // import { useStore } from "vuex"
 // 用自己封装的useStore函数解决Vuex的TS兼容问题
 import { useStore } from "@/store"
+import user from "@/router/main/system/user/user"
 const props = defineProps({
   collapse: {
     type: Boolean,
@@ -56,6 +61,13 @@ const props = defineProps({
 })
 const store = useStore()
 const userMenus = computed(() => store.state.login.userMenus)
+
+const router = useRouter()
+const handleMenuItemClick = (item: any) => {
+  router.push({
+    path: item.url ?? "/not-found"
+  })
+}
 </script>
 
 <style scoped lang="scss">

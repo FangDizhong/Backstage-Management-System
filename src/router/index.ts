@@ -19,6 +19,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "main",
     // 懒加载：需要的时候才加载用箭头函数
     component: () => import("@/views/main/main.vue")
+    // children: [] => 根据userMenu动态映射路由dynamic route
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "not-found",
+    component: () => import("@/views/not-found.vue")
   }
 
   // {

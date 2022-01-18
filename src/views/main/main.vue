@@ -12,7 +12,9 @@
           <nav-header />
         </el-header>
         <!-- 主体内容 -->
-        <el-main class="page-content">Main</el-main>
+        <el-main class="page-content">
+          <router-view />
+        </el-main>
       </el-container>
     </el-container>
   </div>

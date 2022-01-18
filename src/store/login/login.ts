@@ -7,6 +7,7 @@ import {
 } from "@/service/login/login"
 import localCache from "@/utils/cache"
 import router from "@/router"
+import { mapMenusToRoutes } from "@/utils/map-to-routes"
 
 import { IAccount } from "@/service/login/type"
 import { ILoginState } from "./type"
@@ -35,6 +36,15 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
+
+      // 实现动态路由dynamic routes
+      // 1. userMenu => routes
+      const routes = mapMenusToRoutes(userMenus)
+
+      // 2. routes => router.main.children
+      routes.forEach((route) => {
+        router.addRoute("main", route)
+      })
     }
   },
   //把异步操作(比如网络请求)，commit到mutation，再修改到state
