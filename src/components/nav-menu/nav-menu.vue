@@ -76,6 +76,7 @@ const userMenus = computed(() => store.state.login.userMenus)
   .el-menu {
     @apply border-r-0;
 
+    // 样式穿透
     ::v-deep .el-sub-menu__title {
       // color: bisque !important;
       // background-color: blue !important;
