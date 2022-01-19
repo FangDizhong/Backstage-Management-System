@@ -2,7 +2,7 @@
   <div class="nav-header">
     <div class="header-left">
       <fold-menu />
-      <breadcrumb />
+      <breadcrumb :breadcrumbs="breadcrumbs" />
     </div>
 
     <div class="header-right">
@@ -12,7 +12,22 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useStore } from "@/store"
+import { computed } from "vue"
+import { mapPathToBreadcrumbs } from "@/utils/map-to-routes"
+import { useRoute } from "vue-router"
+
+// store
+const store = useStore()
+const breadcrumbs = computed(() => {
+  // 在这里写menu的逻辑才会每次刷新重新计算
+  const userMenus = store.state.login.userMenus
+  const route = useRoute()
+  const currentPath = route.path
+  return mapPathToBreadcrumbs(userMenus, currentPath)
+})
+</script>
 
 <style scoped lang="scss">
 .nav-header {

@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
 // import Home from "../views/Home.vue";
 
 import localCache from "@/utils/cache"
+import { firstMenu } from "@/utils/map-to-routes"
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -48,15 +49,18 @@ const router = createRouter({
   routes
 })
 
-// 每次页面跳转前执行
-// 如果当前路径不是login页，
-// 则检查缓存里有没有login过留下来的token
+// 路由守卫：每次页面跳转前执行
 router.beforeEach((to) => {
+  // 如果当前路径不是login页，则检查缓存里有没有login过留下来的token
   if (to.path !== "/login") {
     const token = localCache.getCache("token")
     if (!token) {
       return "/login"
     }
+  }
+  // 如果当前路径是main，则重定向到firstMenu
+  if (to.path === "/main") {
+    return firstMenu.url
   }
 })
 
