@@ -12,3 +12,10 @@ export interface IFormItem {
   // for others
   otherOptions?: any
 }
+
+export interface IForm {
+  formItems: IFormItem[]
+  labelWidth: string
+  colLayout: any
+  itemLayout: any
+}
