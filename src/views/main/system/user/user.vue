@@ -1,6 +1,16 @@
 <template>
   <div class="user">
-    <basic-form v-bind="searchFormConfig" v-model="formData" />
+    <basic-form v-bind="searchFormConfig" v-model="formData">
+      <template #header>
+        <h1>Advanced Search</h1>
+      </template>
+      <template #footer>
+        <div class="handle-btns">
+          <el-button><i-ep-Refresh /> Reset </el-button>
+          <el-button><i-ep-search /> Search </el-button>
+        </div>
+      </template>
+    </basic-form>
   </div>
 </template>
 
@@ -17,4 +27,14 @@ const formData = ref({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+h1 {
+  @apply text-blue-gray-400 font-bold p-2;
+}
+.handle-btns {
+  @apply text-right pr-[40px] pb-[30px];
+  .el-button {
+    @apply bg-blue-800 text-blue-gray-200;
+  }
+}
+</style>

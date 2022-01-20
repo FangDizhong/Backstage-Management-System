@@ -44,6 +44,8 @@ declare module 'vue' {
     IEpMonitor: typeof import('~icons/ep/monitor')['default']
     IEpMoon: typeof import('~icons/ep/moon')['default']
     IEpPlatform: typeof import('~icons/ep/platform')['default']
+    IEpRefresh: typeof import('~icons/ep/refresh')['default']
+    IEpSearch: typeof import('~icons/ep/search')['default']
     IEpSunny: typeof import('~icons/ep/sunny')['default']
     IEpUserFilled: typeof import('~icons/ep/user-filled')['default']
     NavHeader: typeof import('./components/nav-header/nav-header.vue')['default']

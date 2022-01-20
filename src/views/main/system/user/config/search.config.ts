@@ -44,8 +44,8 @@ export const searchFormConfig: IForm = {
   labelWidth: "120px",
   itemLayout: {
     padding: "10px 40px"
-  },
-  colLayout: {
-    span: 8
   }
+  // colLayout: {
+  //   // span: 8
+  // }
 }
