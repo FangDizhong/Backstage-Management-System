@@ -128,3 +128,36 @@ get init admin password
 ```
 cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
+
+## install Nginx
+
+```
+sudo apt update
+sudo apt install nginx
+```
+
+let Nginx enable when system started
+
+```
+systemctl start nginx
+systemctl status nginx
+/lib/systemd/systemd-sysv-install enable nginx
+```
+
+modify user
+
+```
+vi /etc/nginx/nginx.conf
+```
+
+copy **default** into **cms** in /sites-available/
+
+```
+cp -i default cms
+```
+
+remove **default** add **cms** symlink in /sites-enabled/
+
+```
+cp -s ../sites-available/cms ./cms
+```
