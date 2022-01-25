@@ -1,7 +1,8 @@
 import { createStore, Store, useStore as useVuexStore } from "vuex"
 
 import login from "./login/login"
-import { IRootState, IStoreType } from "./type"
+import system from "./main/system/system"
+import { IRootState, IStoreType } from "./types"
 
 const store = createStore<IRootState>({
   // 保存状态
@@ -19,7 +20,8 @@ const store = createStore<IRootState>({
   actions: {},
   // 模块化开发
   modules: {
-    login
+    login,
+    system
   }
 })
 

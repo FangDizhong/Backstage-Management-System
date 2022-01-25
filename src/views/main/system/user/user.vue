@@ -1,40 +1,25 @@
 <template>
   <div class="user">
-    <basic-form v-bind="searchFormConfig" v-model="formData">
-      <template #header>
-        <h1>Advanced Search</h1>
-      </template>
-      <template #footer>
-        <div class="handle-btns">
-          <el-button><i-ep-Refresh /> Reset </el-button>
-          <el-button><i-ep-search /> Search </el-button>
-        </div>
-      </template>
-    </basic-form>
+    <page-search :searchFormConfig="searchFormConfig" />
   </div>
 </template>
 
 <script setup lang="ts">
+// search form的配置
+import { useStore } from "@/store"
 import { searchFormConfig } from "./config/search.config"
-import { ref } from "vue"
 
-const formData = ref({
-  id: "",
-  name: "",
-  password: "",
-  sports: "",
-  createTime: ""
+// 获取table数据
+const store = useStore()
+// 触发store里的action里的方法，
+// 去提交到mutation，再修改到state
+store.dispatch("system/getPageListAction", {
+  pageUrl: "/users/list",
+  queryInfo: {
+    offset: 0,
+    size: 10
+  }
 })
 </script>
 
-<style scoped>
-h1 {
-  @apply text-blue-gray-400 font-bold p-2;
-}
-.handle-btns {
-  @apply text-right pr-[40px] pb-[30px];
-  .el-button {
-    @apply bg-blue-800 text-blue-gray-200;
-  }
-}
-</style>
+<style scoped></style>

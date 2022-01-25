@@ -1,6 +1,7 @@
-import fdzRequest from ".."
+import fdzRequest from "@/service"
 
-import { IAccount, IDataType, ILoginResult } from "./type"
+import { IAccount, ILoginResult } from "./types"
+import { IDataType } from "@/service/types"
 
 // https://documenter.getpostman.com/view/12347168/TzsfmQvw#
 enum LoginAPI {

@@ -2,7 +2,7 @@
 // 项目中唯一需要import axios的地方，方便修改
 import axios from "axios"
 import type { AxiosInstance } from "axios"
-import type { FDZRequestConfig, FDZRequestInterceptors } from "./type"
+import type { FDZRequestConfig, FDZRequestInterceptors } from "./types"
 
 import { ElLoading } from "element-plus"
 import { LoadingInstance } from "element-plus/lib/components/loading/src/loading"
@@ -85,7 +85,7 @@ class FDZRequest {
   // 每次执行request外部都会传入临时配置
   // 并且返回数据res类型由请求者决定
   // 因此接口FDZRequestConfig一路携带泛型<T>供请求者动态传入类型
-  request<T>(config: FDZRequestConfig<T>): Promise<T> {
+  request<T = any>(config: FDZRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       // 单个请求对数据的处理
       // 如果有临时配置里含拦截器，在内部替ta执行一下

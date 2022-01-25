@@ -50,6 +50,7 @@ declare module 'vue' {
     IEpUserFilled: typeof import('~icons/ep/user-filled')['default']
     NavHeader: typeof import('./components/nav-header/nav-header.vue')['default']
     NavMenu: typeof import('./components/nav-menu/nav-menu.vue')['default']
+    PageSearch: typeof import('./components/page-search/src/page-search.vue')['default']
     UserInfo: typeof import('./components/base-ui/user-info/src/user-info.vue')['default']
   }
 }

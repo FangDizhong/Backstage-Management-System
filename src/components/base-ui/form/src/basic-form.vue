@@ -62,6 +62,9 @@
 import { defineProps, PropType, ref, watch } from "vue"
 import { IFormItem } from "../type"
 
+// 子组件中不要直接修改props里的对象属性
+// 违反单向数据流的原则
+// 应该改为emit event
 const props = defineProps({
   // 双向绑定父组件数据的属性，名字固定
   modelValue: {

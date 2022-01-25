@@ -9,13 +9,18 @@ import localCache from "@/utils/cache"
 import router from "@/router"
 import { mapMenusToRoutes } from "@/utils/map-to-routes"
 
-import { IAccount } from "@/service/login/type"
-import { ILoginState } from "./type"
-import { IRootState } from "../type"
+import { IAccount } from "@/service/login/types"
+import { ILoginState } from "./types"
+import { IRootState } from "../types"
 
 // 模块就只是一个对象而已
 const loginModule: Module<ILoginState, IRootState> = {
+  // https://vuex.vuejs.org/zh/guide/modules.html#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4
+  // 如果希望你的模块具有更高的封装度和复用性，
+  // 你可以通过添加 namespaced: true 的方式使其成为带命名空间的模块。
+  // 当模块被注册后，它的所有 getter、action 及 mutation 都会自动根据模块注册的路径调整命名。
   namespaced: true,
+
   // 保存状态
   state() {
     return {
@@ -24,8 +29,10 @@ const loginModule: Module<ILoginState, IRootState> = {
       userMenus: []
     }
   },
+
   // 存放计算状态里的值之后的数据
   getters: {},
+
   // 修改到state状态，使用时在上一步通过commit修改方法
   mutations: {
     changeToken(state, token: string) {
@@ -47,6 +54,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       })
     }
   },
+
   //把异步操作(比如网络请求)，commit到mutation，再修改到state
   actions: {
     async accountLoginAction({ commit }, payload: IAccount) {
