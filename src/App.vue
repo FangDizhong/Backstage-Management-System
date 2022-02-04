@@ -6,9 +6,21 @@
   <router-view /> -->
 
   <div class="app">
-    <router-view></router-view>
+    <!-- localization -->
+    <el-config-provider :locale="lang">
+      <router-view></router-view>
+    </el-config-provider>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from "vue"
+import zhCn from "element-plus/lib/locale/lang/zh-cn"
+import ja from "element-plus/lib/locale/lang/ja"
+import en from "element-plus/lib/locale/lang/en"
+
+const lang = ref(en)
+</script>
 
 <style lang="scss">
 .app {

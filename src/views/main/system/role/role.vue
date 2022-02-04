@@ -1,18 +1,27 @@
 <template>
   <div class="role">
-    <h2>role</h2>
+    <page-search
+      :searchFormConfig="searchFormConfig"
+      @resetBtnClick="handleResetClick"
+      @searchBtnClick="handleSearchClick"
+    />
+    <page-content
+      ref="pageContentRef"
+      :contentTableConfig="contentTableConfig"
+      :pageName="contentTableConfig.pageUrlName"
+    />
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
+<script setup lang="ts">
+// search-form,content-table的配置
+import { searchFormConfig } from "./config/search.config"
+import { contentTableConfig } from "./config/content.config"
 
-export default defineComponent({
-  name: "role",
-  setup() {
-    return {}
-  }
-})
+import { usePageContentSearch } from "@/hooks/usePageContentSearch"
+
+const [pageContentRef, handleResetClick, handleSearchClick] =
+  usePageContentSearch()
 </script>
 
 <style scoped></style>

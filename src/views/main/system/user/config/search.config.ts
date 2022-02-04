@@ -1,39 +1,40 @@
-import { IForm } from "@/components/base-ui/form"
+import { IForm } from "@/components/base-ui/basic-form"
+import { contentTableConfig } from "./content.config"
 
 export const searchFormConfig: IForm = {
   formItems: [
     {
-      field: "id",
-      type: "input",
-      label: "user ID",
-      placeholder: "Enter user ID"
-    },
-    {
       field: "name",
       type: "input",
       label: "User Name",
-      placeholder: "Enter username"
+      placeholder: "Enter user name"
     },
     {
-      field: "password",
-      type: "password",
-      label: "Password",
-      placeholder: "Enter password"
+      field: "realname",
+      type: "input",
+      label: "Real Name",
+      placeholder: "Enter real name"
     },
     {
-      field: "sports",
+      field: "cellphone",
+      type: "input",
+      label: "Cellphone",
+      placeholder: "Enter cellphone"
+    },
+    {
+      field: "enable",
       type: "select",
-      label: "Favor Sports",
-      placeholder: "Choose your favor Sports",
+      label: "Status",
+      placeholder: "Choose Status",
       options: [
-        { title: "basketball", value: "basketball" },
-        { title: "football", value: "football" }
+        { title: "enable", value: 1 },
+        { title: "disable", value: 0 }
       ]
     },
     {
-      field: "createTime",
+      field: "createAt",
       type: "datepicker",
-      label: "Date Range",
+      label: "Created Time",
       otherOptions: {
         startPlaceholder: "Start Date",
         endPlaceholder: "End Date",
