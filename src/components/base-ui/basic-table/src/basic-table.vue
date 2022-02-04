@@ -59,14 +59,14 @@
       <slot name="table-footer">
         <!-- default in slot: pagination -->
         <el-pagination
-          v-model:currentPage="currentPage4"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          v-model:currentPage="paginationInfo.currentPage"
+          :page-size="paginationInfo.pageSize"
+          :page-sizes="[10, 20, 30]"
           :small="small"
           :disabled="disabled"
           :background="background"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="dataCount"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
         >
@@ -87,6 +87,10 @@ const props = defineProps({
     type: Array,
     required: true
   },
+  dataCount: {
+    type: Number,
+    default: 0
+  },
   propList: {
     type: Array,
     required: true
@@ -98,15 +102,27 @@ const props = defineProps({
   isIndexColumnShown: {
     type: Boolean,
     default: false
+  },
+  paginationInfo: {
+    type: Object,
+    default: () => ({ currentPage: 0, pageSize: 10 })
   }
 })
 
 // emit event
-const emit = defineEmits(["selectionChange"])
+const emit = defineEmits(["selectionChange", "update:paginationInfo"])
 const handleSelectionChange = (value: any) => {
   emit("selectionChange", value)
 }
+const handleCurrentChange = (currentPage: number) => {
+  // paginationInfo是个proxy对象，要解构放入新的值(只要key的名字相对应就可以更新新值)
+  emit("update:paginationInfo", { ...props.paginationInfo, currentPage })
+}
+const handleSizeChange = (pageSize: number) => {
+  emit("update:paginationInfo", { ...props.paginationInfo, pageSize })
+}
 </script>
+
 <style scoped lang="scss">
 .table-header {
   @apply flex flex-row justify-between items-center;

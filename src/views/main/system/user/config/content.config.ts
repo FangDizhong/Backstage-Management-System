@@ -29,13 +29,13 @@ export const contentTableConfig = {
     {
       prop: "createAt",
       label: "Created Time",
-      minWidth: "250",
+      minWidth: "200",
       slotName: "createdTime"
     },
     {
       prop: "updateAt",
       label: "Updated Time",
-      minWidth: "250",
+      minWidth: "200",
       slotName: "updatedTime"
     },
     {

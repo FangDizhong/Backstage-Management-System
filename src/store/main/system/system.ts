@@ -45,6 +45,11 @@ const systemModule: Module<ISystemState, IRootState> = {
       return (pageName: string) => {
         return state[`${pageName.toLowerCase()}List`]
       }
+    },
+    pageListCount(state) {
+      return (pageName: string) => {
+        return state[`${pageName.toLowerCase()}Count`]
+      }
     }
   },
   //把异步操作(比如网络请求)，commit到mutation，再修改到state

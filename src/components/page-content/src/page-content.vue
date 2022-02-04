@@ -1,14 +1,17 @@
 <template>
   <div class="page-content">
     <!-- tabledata是表内具体数据，
-          propList是定义表头和对应数据属性名等数据 -->
+          contentTableConfig.propList是定义表头和对应数据属性名等数据 -->
     <basic-table
-      :tableData="datalist"
+      :tableData="pageDatalist"
+      :dataCount="pageDataCount"
       v-bind="contentTableConfig"
+      v-model:paginationInfo="pageInfo"
       @selectionChange="handleSelectionChange"
     >
-      <!-- parent component 使用具名插槽Named slot的时候，
-            在template里#[指定slotName] -->
+      <!-- v-model绑定给子组件的paginationInfo(不然默认绑定给modalValue) -->
+
+      <!-- parent component 使用具名插槽Named slot的时候，在template里#[指定slotName] -->
       <template #table-header-handler>
         <el-button> {{ contentTableConfig.tableHandlerBtn }} </el-button>
       </template>
@@ -49,7 +52,7 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store"
-import { computed } from "vue"
+import { computed, ref, watch } from "vue"
 
 // 定义parent component传来的config数据
 const props = defineProps({
@@ -62,8 +65,14 @@ const props = defineProps({
     required: true
   }
 })
+
 // 获取table数据
 const store = useStore()
+
+// 每次paginationInfo传来的值改动，重新发送获取table数据的请求。
+// getpageContentData默认把当前组件pageInfo的值作为offset和size的值
+const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+watch(pageInfo, () => getPageContentData())
 
 // 传入查询信息给后端api以获取相应条件的数据,默认为无查询条件
 const getPageContentData = (queryInfo: any = {}) => {
@@ -73,20 +82,22 @@ const getPageContentData = (queryInfo: any = {}) => {
     // pageUrl: "/users/list",
     pageName: props.pageName,
     queryInfo: {
-      offset: 0,
-      size: 10,
+      offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+      size: pageInfo.value.pageSize,
       ...queryInfo
     }
   })
 }
-
 // setup 只在每次加载时调用一次
 getPageContentData()
 
-const datalist = computed(() =>
+// 从store根据pageName获取相应table数据
+const pageDatalist = computed(() =>
   store.getters[`system/pageListData`](props.pageName)
 )
-// const usersCount = computed(() => store.state.system.usersCount)
+const pageDataCount = computed(() =>
+  store.getters[`system/pageListCount`](props.pageName)
+)
 
 const handleSelectionChange = (value: any) => {
   console.log(value)
