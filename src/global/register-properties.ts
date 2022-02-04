@@ -5,9 +5,9 @@ export default function registerProperties(app: App) {
   app.config.globalProperties.$filters = {
     formatTime(value: string) {
       return formatUtcString(value)
-    },
-    toUpperFirstLetter(value: string) {
-      return value.charAt(0).toUpperCase() + value.slice(1)
     }
+    // toUpperFirstLetter(value: string) {
+    //   return value.charAt(0).toUpperCase() + value.slice(1)
+    // }
   }
 }

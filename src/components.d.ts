@@ -5,6 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     BasicForm: typeof import('./components/base-ui/basic-form/src/basic-form.vue')['default']
+    'BasicForm_(anotherApproach)': typeof import('./components/base-ui/basic-form/src/basic-form_(another-approach).vue')['default']
     BasicTable: typeof import('./components/base-ui/basic-table/src/basic-table.vue')['default']
     Breadcrumb: typeof import('./components/base-ui/breadcrumb/src/breadcrumb.vue')['default']
     DarkMode: typeof import('./components/base-ui/dark-mode/src/dark-mode.vue')['default']

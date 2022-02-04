@@ -64,24 +64,38 @@ const props = defineProps({
 })
 // 获取table数据
 const store = useStore()
-// 触发store里的action里的方法，
-// 去提交到mutation，再修改到state
-store.dispatch("system/getPageListAction", {
-  // pageUrl: "/users/list",
-  pageName: props.pageName,
-  queryInfo: {
-    offset: 0,
-    size: 10
-  }
-})
+
+// 传入查询信息给后端api以获取相应条件的数据,默认为无查询条件
+const getPageContentData = (queryInfo: any = {}) => {
+  // 触发store里的action里的方法，
+  // 去提交到mutation，再修改到state
+  store.dispatch("system/getPageListAction", {
+    // pageUrl: "/users/list",
+    pageName: props.pageName,
+    queryInfo: {
+      offset: 0,
+      size: 10,
+      ...queryInfo
+    }
+  })
+}
+
+// setup 只在每次加载时调用一次
+getPageContentData()
+
 const datalist = computed(() =>
   store.getters[`system/pageListData`](props.pageName)
 )
-const usersCount = computed(() => store.state.system.usersCount)
+// const usersCount = computed(() => store.state.system.usersCount)
 
 const handleSelectionChange = (value: any) => {
   console.log(value)
 }
+
+// 暴露给parent component 供 template Ref引用
+defineExpose({
+  getPageContentData
+})
 </script>
 
 <style scoped lang="scss">

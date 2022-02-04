@@ -79,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, PropType, ref, watch } from "vue"
+import { defineProps, PropType } from "vue"
 import { IFormItem } from "../type"
 
 // 子组件中不要直接修改props里的对象属性

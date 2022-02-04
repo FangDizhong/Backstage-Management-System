@@ -10,7 +10,9 @@
           <el-button @click="handleResetClick"
             ><i-ep-Refresh /> Reset
           </el-button>
-          <el-button><i-ep-search /> Search </el-button>
+          <el-button @click="handleSearchClick"
+            ><i-ep-search /> Search
+          </el-button>
         </div>
       </template>
     </basic-form>
@@ -27,6 +29,8 @@ const props = defineProps({
     required: true
   }
 })
+// 定义向parent component发送的事件
+const emit = defineEmits(["resetBtnClick", "searchBtnClick"])
 
 // 绑定可响应式的表单数据,由传来的config的field决定
 const formItems = props.searchFormConfig?.formItems ?? []
@@ -48,6 +52,13 @@ const handleResetClick = () => {
   // }
 
   formData.value = formInitData
+  emit("resetBtnClick")
+}
+
+// Search btn
+const handleSearchClick = () => {
+  // 点击搜索按钮时,把搜索框proxy对象的value对象传给父组件
+  emit("searchBtnClick", formData.value)
 }
 </script>
 

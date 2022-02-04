@@ -17,7 +17,7 @@ export const contentTableConfig = {
       prop: "intro",
       label: "Authority",
       minWidth: "100",
-      slotName: "realName"
+      slotName: "authority"
     },
 
     {
