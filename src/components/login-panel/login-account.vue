@@ -22,7 +22,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue"
 import { useStore } from "vuex"
-import { rules } from "../config/account-config"
+import { rules } from "../login-panel/config/account-config"
 // 为了使用ElForm类型
 import { ElForm } from "element-plus"
 import localCache from "@/utils/cache"

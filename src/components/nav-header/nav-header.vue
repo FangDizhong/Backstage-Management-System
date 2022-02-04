@@ -31,8 +31,8 @@ const breadcrumbs = computed(() => {
 
 <style scoped lang="scss">
 .nav-header {
-  @apply h-full w-full justify-between
-  flex flex-row;
+  @apply h-full w-full
+  flex flex-row justify-between items-center;
   .header-left {
     @apply h-full px-2.5
     flex flex-row;

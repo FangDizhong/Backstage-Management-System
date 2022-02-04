@@ -1,7 +1,8 @@
 <template>
   <div class="basic-form">
-    <div class="header">
-      <slot name="header"></slot>
+    <div class="form-header">
+      <!-- provide Named slot for customized usage -->
+      <slot name="form-header"></slot>
     </div>
 
     <el-form :label-width="labelWidth">
@@ -16,19 +17,35 @@
               <template
                 v-if="item.type === 'input' || item.type === 'password'"
               >
+                <!-- 思路一:子组件和父组件各自双向绑定各自的form-data,
+              子组件通过watch自己copied后的新的FormData后
+              emit新proxy对象给父组件的v-model="formData" -->
                 <el-input
                   :placeholder="item.placeholder"
                   :show-password="item.type === 'password'"
                   v-bind="item.otherOptions"
-                  v-model="formData[`${item.field}`]"
+                  v-model="copiedFormData[`${item.field}`]"
                 />
+
+                <!-- formData是proxy对象,所以要这么写 -->
+
+                <!-- 思路二:把子组件v-model拆开成两步:
+                把父组件modelValue传进孙组件,
+                监听孙组件的值变化,促发emit事件 -->
+                <!-- <el-input
+                  :placeholder="item.placeholder"
+                  :show-password="item.type === 'password'"
+                  v-bind="item.otherOptions"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:model-value="handleValueChange($event, item.field)"
+                /> -->
               </template>
 
               <template v-else-if="item.type === 'select'">
                 <el-select
                   :placeholder="item.placeholder"
                   v-bind="item.otherOptions"
-                  v-model="formData[`${item.field}`]"
+                  v-model="copiedFormData[`${item.field}`]"
                 >
                   <el-option
                     v-for="option in item.options"
@@ -43,7 +60,7 @@
                 <!-- v-bind 不管绑定的内部数据结构是什么一股脑全绑进来 -->
                 <el-date-picker
                   v-bind="item.otherOptions"
-                  v-model="formData[`${item.field}`]"
+                  v-model="copiedFormData[`${item.field}`]"
                 ></el-date-picker>
               </template>
             </el-form-item>
@@ -52,8 +69,9 @@
       </el-row>
     </el-form>
 
-    <div class="footer">
-      <slot name="footer"></slot>
+    <div class="form-footer">
+      <!-- provide Named slot for customized usage -->
+      <slot name="form-footer"></slot>
     </div>
   </div>
 </template>
@@ -96,25 +114,31 @@ const props = defineProps({
   }
 })
 
-// emit event
+// emit v-model event
 const emit = defineEmits(["update:modelValue"])
-// 把父组件的v-model绑定的数据modelValue复制一份ref可响应式的对象
-const formData = ref({ ...props.modelValue })
-watch(formData, (newValue) => emit("update:modelValue", newValue), {
+
+// 思路一:子组件和爷组件各自双向绑定各自的form-data,
+// 子组件通过watch自己copied后的新的FormData,
+// emit新proxy对象给爷组件的v-model="formData"
+
+// 把爷组件的v-model绑定的数据modelValue,解构放在新对象里
+// 浅拷贝(对第一层拷贝，对第二层保留堆内存引用)
+// 把新对象放在子组件ref可响应式的对象里
+// 此时copiedFormData已经和爷组件的formData不是同一个对象了
+const copiedFormData = ref({ ...props.modelValue })
+// watch可响应式的ref(proxy)对象时,newValue是新的proxy对象,而不是值
+watch(copiedFormData, (newValue) => emit("update:modelValue", newValue), {
   // 只有deep模式才能监视对象内部的属性变化
   deep: true
+  // immediate: true
 })
-</script>
 
-<style scoped lang="scss">
-.basic-form {
-  @apply pt-[20px];
-  .el-form-item {
-    @apply mb-1;
-  }
-  .el-select,
-  ::v-deep .el-date-editor {
-    @apply w-full;
-  }
-}
-</style>
+// // 思路二:把子组件v-model拆开成两步:
+// // 把爷组件modelValue传进孙组件,
+// // 子组件监听孙组件的值变化,emit数据更新后的新modelValue对象给爷组件
+// const handleValueChange = (value: any, field: string) => {
+//   // 把爷组件传来的formData对象拷贝一份,替换掉有数据更新的键值对
+//   emit("update:modelValue", { ...props.modelValue, [field]: value })
+//   console.log({ ...props.modelValue, [field]: value })
+// }
+</script>

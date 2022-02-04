@@ -1,25 +1,17 @@
 <template>
   <div class="user">
     <page-search :searchFormConfig="searchFormConfig" />
+    <page-content
+      :contentTableConfig="contentTableConfig"
+      :pageName="contentTableConfig.pageUrlName"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-// search form的配置
-import { useStore } from "@/store"
+// search-form,content-table的配置
 import { searchFormConfig } from "./config/search.config"
-
-// 获取table数据
-const store = useStore()
-// 触发store里的action里的方法，
-// 去提交到mutation，再修改到state
-store.dispatch("system/getPageListAction", {
-  pageUrl: "/users/list",
-  queryInfo: {
-    offset: 0,
-    size: 10
-  }
-})
+import { contentTableConfig } from "./config/content.config"
 </script>
 
 <style scoped></style>

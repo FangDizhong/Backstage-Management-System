@@ -4,19 +4,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
-import LoginPanel from "./cpns/login-panel.vue"
-
-export default defineComponent({
-  components: {
-    LoginPanel
-  },
-  setup() {
-    return {}
-  }
-})
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .login {
