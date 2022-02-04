@@ -71,7 +71,7 @@ const store = useStore()
 
 // 每次paginationInfo传来的值改动，重新发送获取table数据的请求。
 // getpageContentData默认把当前组件pageInfo的值作为offset和size的值
-const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+const pageInfo = ref({ currentPage: 1, pageSize: 10 })
 watch(pageInfo, () => getPageContentData())
 
 // 传入查询信息给后端api以获取相应条件的数据,默认为无查询条件
@@ -82,7 +82,7 @@ const getPageContentData = (queryInfo: any = {}) => {
     // pageUrl: "/users/list",
     pageName: props.pageName,
     queryInfo: {
-      offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+      offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
       size: pageInfo.value.pageSize,
       ...queryInfo
     }
