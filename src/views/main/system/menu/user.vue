@@ -1,5 +1,5 @@
 <template>
-  <div class="goods">
+  <div class="user">
     <page-search
       :searchFormConfig="searchFormConfig"
       @resetBtnClick="handleResetClick"
@@ -9,20 +9,7 @@
       ref="pageContentRef"
       :contentTableConfig="contentTableConfig"
       :pageName="contentTableConfig.pageUrlName"
-    >
-      <template #oldPrice="scope">
-        <div>{{ "￥" + scope.row.oldPrice }}</div>
-      </template>
-
-      <template #image="scope">
-        <el-image
-          style="width: 60px; height: 60px"
-          :src="scope.row.imgUrl"
-          fit="cover"
-          :preview-src-list="[scope.row.imgUrl]"
-        ></el-image>
-      </template>
-    </page-content>
+    />
   </div>
 </template>
 

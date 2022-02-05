@@ -13,7 +13,9 @@
 
       <!-- parent component 使用具名插槽Named slot的时候，在template里#[指定slotName] -->
       <template #table-header-handler>
-        <el-button> {{ contentTableConfig.tableHandlerBtn }} </el-button>
+        <el-button v-if="isCreate">
+          {{ contentTableConfig.tableHandlerBtn }}
+        </el-button>
       </template>
       <!-- 传给el-table的:data，会返回给scope插槽
           返回的是table的row, column, $index 和 store（table 内部的状态管理）的数据
@@ -32,25 +34,43 @@
         </el-button>
       </template>
 
-      <template #createdTime="scope">
+      <template #createdAt="scope">
         <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
       </template>
 
-      <template #updatedTime="scope">
+      <template #updatedAt="scope">
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
 
       <template #actions>
         <div>
-          <el-button size="small" type="text"><i-ep-Edit />Edit</el-button>
-          <el-button size="small" type="text"><i-ep-Delete />Delete</el-button>
+          <el-button v-if="isUpdate" size="small" type="text"
+            ><i-ep-Edit />Edit</el-button
+          >
+          <el-button v-if="isDelete" size="small" type="text"
+            ><i-ep-Delete />Delete</el-button
+          >
         </div>
+      </template>
+
+      <!-- dynamic insert other slots  -->
+      <template
+        v-for="item in otherPropSlots"
+        :key="item.prop"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <!-- 留有具名插槽Named Slots，供parent component去按slotName插入 -->
+          <!-- :row="scope.row"是接收后端发来到store里的行数据 -->
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
       </template>
     </basic-table>
   </div>
 </template>
 
 <script setup lang="ts">
+import { usePermission } from "@/hooks/usePermission"
 import { useStore } from "@/store"
 import { computed, ref, watch } from "vue"
 
@@ -68,14 +88,24 @@ const props = defineProps({
 
 // 获取table数据
 const store = useStore()
+// 获取操作权限
+const isCreate = usePermission(props.pageName, "create")
+const isUpdate = usePermission(props.pageName, "update")
+const isDelete = usePermission(props.pageName, "delete")
+const isQuery = usePermission(props.pageName, "query")
 
-// 每次paginationInfo传来的值改动，重新发送获取table数据的请求。
+// 1. 每次paginationInfo传来的值改动，重新发送获取table数据的请求。
 // getpageContentData默认把当前组件pageInfo的值作为offset和size的值
 const pageInfo = ref({ currentPage: 1, pageSize: 10 })
 watch(pageInfo, () => getPageContentData())
 
-// 传入查询信息给后端api以获取相应条件的数据,默认为无查询条件
+// 2. 传入查询信息给后端api以获取相应条件的数据,默认为无查询条件
 const getPageContentData = (queryInfo: any = {}) => {
+  if (!isQuery) {
+    return alert(
+      `Sorry! You don't have permission to query for ${props.pageName.toLowerCase()}.`
+    )
+  }
   // 触发store里的action里的方法，
   // 去提交到mutation，再修改到state
   store.dispatch("system/getPageListAction", {
@@ -91,7 +121,7 @@ const getPageContentData = (queryInfo: any = {}) => {
 // setup 只在每次加载时调用一次
 getPageContentData()
 
-// 从store根据pageName获取相应table数据
+// 3. 从store根据pageName获取相应table数据
 const pageDatalist = computed(() =>
   store.getters[`system/pageListData`](props.pageName)
 )
@@ -102,6 +132,28 @@ const pageDataCount = computed(() =>
 const handleSelectionChange = (value: any) => {
   console.log(value)
 }
+
+// 4. 获取其他动态插槽名称js数组filter()高阶函数
+const otherPropSlots = props.contentTableConfig?.propList.filter(
+  (item: any) => {
+    // const excludedSlots = ["status", "createdAt", "updatedAt", "actions"]
+    // return excludedSlots.indexOf(item.slotName) < 0
+    return (
+      item.slotName !== "status" &&
+      item.slotName !== "createdAt" &&
+      item.slotName !== "updatedAt" &&
+      item.slotName !== "actions"
+    )
+    // return !(
+    //   item.slotName === "status" ||
+    //   item.slotName === "createdAt" ||
+    //   item.slotName === "updatedAt" ||
+    //   item.slotName === "actions"
+    // )
+  }
+)
+
+console.log(otherPropSlots)
 
 // 暴露给parent component 供 template Ref引用
 defineExpose({

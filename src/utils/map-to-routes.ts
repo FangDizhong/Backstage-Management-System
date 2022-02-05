@@ -1,4 +1,5 @@
 import { IBreadcrumb } from "@/components/base-ui/breadcrumb/types"
+import menu from "@/router/main/system/menu/menu"
 import { RouteRecordRaw } from "vue-router"
 
 let firstMenu: any = null
@@ -68,6 +69,22 @@ export function mapPathToMenu(
       return menu
     }
   }
+}
+
+export function mapMenusToPermissions(userMenus: any[]) {
+  const permission: string[] = []
+  const _recureseGetPermission = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.type === 1 || menu.type === 2) {
+        _recureseGetPermission(menu.children ?? [])
+      } else if (menu.type === 3) {
+        permission.push(menu.permission)
+      }
+    }
+  }
+  _recureseGetPermission(userMenus)
+
+  return permission
 }
 
 export { firstMenu }

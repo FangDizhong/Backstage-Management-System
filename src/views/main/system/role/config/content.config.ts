@@ -22,15 +22,15 @@ export const contentTableConfig = {
 
     {
       prop: "createAt",
-      label: "Created Time",
+      label: "Created At",
       minWidth: "250",
-      slotName: "createdTime"
+      slotName: "createdAt"
     },
     {
       prop: "updateAt",
-      label: "Updated Time",
+      label: "Updated At",
       minWidth: "250",
-      slotName: "updatedTime"
+      slotName: "updatedAt"
     },
     {
       // prop: 对应的是table内部数据的属性名

@@ -1,7 +1,7 @@
-const pageName = "User"
+const pageName = "Goods"
 
 export const contentTableConfig = {
-  pageUrlName: `${pageName}s`,
+  pageUrlName: `${pageName}`,
   tableTitle: `${pageName} List`,
   tableHandlerBtn: `New ${pageName}`,
   isSelectColumnShown: true,
@@ -10,22 +10,28 @@ export const contentTableConfig = {
     {
       prop: "name",
       label: `${pageName} Name`,
-      minWidth: "100",
+      minWidth: "120",
       slotName: `${pageName.toLowerCase()}Name`
     },
     {
-      prop: "realname",
-      label: "Real Name",
+      prop: "oldPrice",
+      label: "Old Price",
       minWidth: "100",
-      slotName: "realName"
+      slotName: "oldPrice"
     },
     {
-      prop: "cellphone",
-      label: "Phone Number",
-      minWidth: "150",
-      slotName: "phoneNumber"
+      prop: "newPrice",
+      label: "New Price",
+      minWidth: "100",
+      slotName: "newPrice"
     },
-    { prop: "enable", label: "Status", minWidth: "100", slotName: "status" },
+    {
+      prop: "imgUrl",
+      label: "Image",
+      minWidth: "100",
+      slotName: "image"
+    },
+    { prop: "status", label: "Status", minWidth: "100", slotName: "status" },
     {
       prop: "createAt",
       label: "Created At",
