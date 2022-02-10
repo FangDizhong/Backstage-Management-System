@@ -33,8 +33,8 @@ export default defineComponent({
 
     // 表单双向绑定数据
     const account = reactive({
-      name: localCache.getCache("name") ?? "",
-      password: localCache.getCache("password") ?? ""
+      name: localCache.getCache("name") ?? "coderwhy",
+      password: localCache.getCache("password") ?? "123456"
     })
     // typeof把ElForm对象转成实例，InstanceType把实例转成类型
     const formRef = ref<InstanceType<typeof ElForm>>()

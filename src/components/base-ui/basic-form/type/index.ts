@@ -12,9 +12,14 @@ export interface IFormItem {
 
   // for others
   otherOptions?: any
+
+  // for page-modal to hide some fields like "password"
+  isHidden?: boolean
 }
 
 export interface IForm {
+  pageName?: string
+  pageUrlName?: string
   formItems: IFormItem[]
   labelWidth?: string
   itemLayout?: any

@@ -38,6 +38,11 @@ const formInitData: any = {}
 for (const item of formItems) {
   formInitData[item.field] = ""
 }
+// 此时，原本改formdata时，formInitData的值也会改变(污染初始化的状态)
+// 但，由于每次input新的值都会从basic-form子组件emit一个新对象给formData赋值
+// 所以在page-search组件中，formInitData能保持初始的空值状态
+// 但是在page-modal组件中，由于每次创建都会在hook函数中用rowData对formData赋值，
+// 所以formInitData也就跟着一起改变
 const formData = ref(formInitData)
 
 // reset btn

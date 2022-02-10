@@ -1,7 +1,12 @@
 import { Module } from "vuex"
 import { IRootState } from "@/store/types"
 import { ISystemState } from "./types"
-import { getPageListAction } from "@/service/main/system/system"
+import {
+  deletePageDataRequest,
+  getPageDataRequest,
+  addPageDataRequest,
+  editPageDataRequest
+} from "@/service/main/system/system"
 
 // const PageMap = {
 //   user: "/api/users/abc/list",
@@ -91,7 +96,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       // let pageUrl = PageMap[pageName]
 
       // 1.要到页面要渲染的数据
-      const pageResult = await getPageListAction(pageUrl, payload.queryInfo)
+      const pageResult = await getPageDataRequest(pageUrl, payload.queryInfo)
       const { list, totalCount } = pageResult.data
       // const toUpperFirstLetter = (value: string) => {
       //   return value.charAt(0).toUpperCase() + value.slice(1)
@@ -106,6 +111,51 @@ const systemModule: Module<ISystemState, IRootState> = {
         `change${pageName}Count`,
         totalCount
       )
+    },
+
+    // {dispatch}相当于this.dispatch,获取方法
+    async deletePageRowDataAction({ dispatch }, payload: any) {
+      // 1 获取pageName和dataID
+      const { pageName, dataID, queryInfo } = payload
+      const pageUrl = `/${pageName.toLowerCase()}/${dataID}`
+      // 2 调用删除的网络请求
+      await deletePageDataRequest(pageUrl)
+
+      // 3 重新请求pageList
+      dispatch("getPageListAction", {
+        pageName,
+        queryInfo
+      })
+    },
+
+    async editPageRowDataAction({ dispatch }, payload: any) {
+      const { pageName, dataID, editData } = payload
+      const pageUrl = `/${pageName.toLowerCase()}/${dataID}`
+      await editPageDataRequest(pageUrl, editData)
+
+      // 3 重新请求pageList
+      dispatch("getPageListAction", {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+    },
+
+    async addPageRowDataAction({ dispatch }, payload: any) {
+      const { pageName, newData } = payload
+      const pageUrl = `/${pageName.toLowerCase()}`
+      await addPageDataRequest(pageUrl, newData)
+
+      // 3 重新请求pageList
+      dispatch("getPageListAction", {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
     }
   }
 }

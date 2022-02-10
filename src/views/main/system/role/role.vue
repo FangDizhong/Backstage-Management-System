@@ -18,10 +18,10 @@
 import { searchFormConfig } from "./config/search.config"
 import { contentTableConfig } from "./config/content.config"
 
-import { usePageContentSearch } from "@/hooks/usePageContentSearch"
+import { useSearchPageContent } from "@/hooks/useSearchPageContent"
 
 const [pageContentRef, handleResetClick, handleSearchClick] =
-  usePageContentSearch()
+  useSearchPageContent()
 </script>
 
 <style scoped></style>

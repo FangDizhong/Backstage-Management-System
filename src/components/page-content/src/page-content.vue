@@ -13,7 +13,7 @@
 
       <!-- parent component 使用具名插槽Named slot的时候，在template里#[指定slotName] -->
       <template #table-header-handler>
-        <el-button v-if="isCreate">
+        <el-button v-if="isCreate" @click="handleNewDataClick()">
           {{ contentTableConfig.tableHandlerBtn }}
         </el-button>
       </template>
@@ -42,14 +42,24 @@
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
 
-      <template #actions>
+      <template #actions="scope">
         <div>
-          <el-button v-if="isUpdate" size="small" type="text"
-            ><i-ep-Edit />Edit</el-button
+          <el-button
+            v-if="isUpdate"
+            size="small"
+            type="text"
+            @click="handleEditClick(scope.row)"
           >
-          <el-button v-if="isDelete" size="small" type="text"
-            ><i-ep-Delete />Delete</el-button
+            <i-ep-Edit />Edit
+          </el-button>
+          <el-button
+            v-if="isDelete"
+            size="small"
+            type="text"
+            @click="handleDeleteClick(scope.row)"
           >
+            <i-ep-Delete />Delete
+          </el-button>
         </div>
       </template>
 
@@ -70,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { usePermission } from "@/hooks/usePermission"
+import { useVerifyPermission } from "@/hooks/useVerifyPermission"
 import { useStore } from "@/store"
 import { computed, ref, watch } from "vue"
 
@@ -85,14 +95,15 @@ const props = defineProps({
     required: true
   }
 })
-
+// 定义emit event 给parent component
+const emits = defineEmits(["newDataBtnClick", "editBtnClick"])
 // 获取table数据
 const store = useStore()
 // 获取操作权限
-const isCreate = usePermission(props.pageName, "create")
-const isUpdate = usePermission(props.pageName, "update")
-const isDelete = usePermission(props.pageName, "delete")
-const isQuery = usePermission(props.pageName, "query")
+const isCreate = useVerifyPermission(props.pageName, "create")
+const isUpdate = useVerifyPermission(props.pageName, "update")
+const isDelete = useVerifyPermission(props.pageName, "delete")
+const isQuery = useVerifyPermission(props.pageName, "query")
 
 // 1. 每次paginationInfo传来的值改动，重新发送获取table数据的请求。
 // getpageContentData默认把当前组件pageInfo的值作为offset和size的值
@@ -129,10 +140,6 @@ const pageDataCount = computed(() =>
   store.getters[`system/pageListCount`](props.pageName)
 )
 
-const handleSelectionChange = (value: any) => {
-  console.log(value)
-}
-
 // 4. 获取其他动态插槽名称js数组filter()高阶函数
 const otherPropSlots = props.contentTableConfig?.propList.filter(
   (item: any) => {
@@ -153,8 +160,32 @@ const otherPropSlots = props.contentTableConfig?.propList.filter(
   }
 )
 
-console.log(otherPropSlots)
+// 5. table actions
+const handleSelectionChange = (value: any) => {
+  console.log(value)
+}
 
+const handleDeleteClick = (rowData: any) => {
+  store.dispatch("system/deletePageRowDataAction", {
+    // pageUrl: "/users/list",
+    pageName: props.pageName,
+    dataID: rowData.id,
+    queryInfo: {
+      offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
+      size: pageInfo.value.pageSize
+      // ...queryInfo
+    }
+  })
+}
+
+const handleEditClick = (rowData: any) => {
+  // different from DeleteClick:
+  // EditClick emit event through parent component, into page-modal
+  emits("editBtnClick", rowData)
+}
+const handleNewDataClick = () => {
+  emits("newDataBtnClick")
+}
 // 暴露给parent component 供 template Ref引用
 defineExpose({
   getPageContentData

@@ -11,7 +11,9 @@
 
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item> <i-ep-avatar />Log Out </el-dropdown-item>
+        <el-dropdown-item @click="handleLogoutClick()">
+          <i-ep-avatar />Log Out
+        </el-dropdown-item>
         <el-dropdown-item divided>
           <i-ep-infoFilled /> User Info
         </el-dropdown-item>
@@ -25,11 +27,25 @@
 </template>
 
 <script setup lang="ts">
+import router from "@/router"
 import { useStore } from "@/store"
+// import { ElMessage } from "element-plus"
 import { computed } from "vue"
+import localStorage from "@/utils/local-save"
 
 const store = useStore()
 const userName = computed(() => store.state.login.userInfo.name)
+
+const handleLogoutClick = () => {
+  localStorage.deleteSave("token")
+  localStorage.deleteSave("userMenus")
+  localStorage.deleteSave("userInfo")
+  router.push("/login")
+  // ElMessage({
+  //   message: "退出登录",
+  //   center: true
+  // })
+}
 </script>
 
 <style scoped lang="scss">
