@@ -115,12 +115,10 @@ module.exports = {
   //   .set("@", path.resolve(__dirname,"src"))
   //   .set("components", "@/components")
   // }
-  chainWebpack: config => {
-    config
-      .plugin('html')
-      .tap(args => {
-        args[0].title= 'CMS Demo'
-        return args
-      })
+  chainWebpack: (config) => {
+    config.plugin("html").tap((args) => {
+      args[0].title = "CMS Demo"
+      return args
+    })
   }
 }
