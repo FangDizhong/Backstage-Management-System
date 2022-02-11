@@ -52,15 +52,16 @@ const store = useStore()
 const modalFormConfigRef = computed(() => {
   // set department list
   const departmentItem = modalFormConfig.formItems.find(
-    (formItem) => formItem.field === "departmentID"
+    (formItem) => formItem.field === "departmentId"
   )
+  // 只有map支持return新数组
   departmentItem!.options = store.state.entireDepartmentList.map((item) => {
     return { title: item.name, value: item.id }
   })
 
   // set role list
   const roleItem = modalFormConfig.formItems.find(
-    (formItem) => formItem.field === "roleID"
+    (formItem) => formItem.field === "roleId"
   )
   roleItem!.options = store.state.entireRoleList.map((item) => {
     return { title: item.name, value: item.id }

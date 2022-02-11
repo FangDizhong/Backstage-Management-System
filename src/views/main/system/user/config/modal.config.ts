@@ -30,14 +30,14 @@ export const modalFormConfig: IForm = {
       placeholder: "Enter cellphone"
     },
     {
-      field: "departmentID",
+      field: "departmentId",
       type: "select",
       label: "Department",
       placeholder: "Choose Department",
       options: []
     },
     {
-      field: "roleID",
+      field: "roleId",
       type: "select",
       label: "Role",
       placeholder: "Choose Role",

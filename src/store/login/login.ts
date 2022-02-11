@@ -62,7 +62,7 @@ const loginModule: Module<ILoginState, IRootState> = {
 
   //把异步操作(比如网络请求)，commit到mutation，再修改到state
   actions: {
-    async accountLoginAction({ commit }, payload: IAccount) {
+    async accountLoginAction({ commit, dispatch }, payload: IAccount) {
       // 1.实现登录逻辑
       const loginResult = await accountLoginRequest(payload)
       console.log(loginResult.data.id, loginResult.data.token)
@@ -82,12 +82,16 @@ const loginModule: Module<ILoginState, IRootState> = {
       commit("changeUserMenus", userMenus)
       localCache.setCache("userMenus", userMenus)
 
+      // 4.0 跳转main页面之前，获取entire Department list 和 entire Role list
+      // 模块中调root的action的方法
+      dispatch("getInitialDataAction", null, { root: true })
+
       // 4.router跳转页面
       router.push("/main")
     },
 
     // 原页面刷新时，从缓存里加载已login过的信息到vuex里
-    loadLocalLogin({ commit }) {
+    loadLocalLogin({ commit, dispatch }) {
       const token = localCache.getCache("token")
       if (token) {
         commit("changeToken", token)
@@ -100,6 +104,9 @@ const loginModule: Module<ILoginState, IRootState> = {
       if (userMenus) {
         commit("changeUserMenus", userMenus)
       }
+      // 原地刷新页面时，获取entire Department list 和 entire Role list
+      // 模块中调root的action的方法
+      dispatch("getInitialDataAction", null, { root: true })
     }
   }
 }

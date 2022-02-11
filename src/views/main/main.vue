@@ -34,9 +34,9 @@ const isFolded = function (foldState: Ref<boolean>) {
 
 provide("isFolded", isFolded)
 
-// 当main加载时，获取entire Department list 和 entire Role list
-const store = useStore()
-store.dispatch("getInitialDataAction")
+// // 当main加载时，获取entire Department list 和 entire Role list
+// const store = useStore()
+// store.dispatch("getInitialDataAction")
 </script>
 
 <style scoped lang="scss">
