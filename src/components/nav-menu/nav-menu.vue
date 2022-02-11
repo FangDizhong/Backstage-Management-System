@@ -1,8 +1,8 @@
 <template>
   <div class="nav-menu">
     <div class="logo">
-      <img class="img" src="@\assets\img\logo.svg" alt="logo" />
-      <span class="title" v-show="!collapse">Ask Online</span>
+      <img class="img" src="@/assets/img/logo.svg" alt="logo" />
+      <span class="title" v-show="!collapse">{{ title }}</span>
     </div>
 
     <el-menu
@@ -63,6 +63,10 @@ const props = defineProps({
   collapse: {
     type: Boolean,
     default: false
+  },
+  title: {
+    type: String,
+    default: "Vue 3 + TS"
   }
 })
 
@@ -89,17 +93,17 @@ const handleMenuItemClick = (item: any) => {
 
 <style scoped lang="scss">
 .nav-menu {
-  @apply h-full bg-blue-gray-900;
+  @apply h-full overflow-x-hidden bg-blue-gray-900;
 
   .logo {
     @apply flex flex-row justify-start items-center
-    h-48px py-10px px-10px;
-    .img {
-      @apply h-full my-0 mx-10px;
+            h-48px py-12px px-15px;
+    img {
+      @apply h-full my-0;
     }
     .title {
       @apply text-16px font-weight-700
-      whitespace-nowrap;
+             mx-10px whitespace-nowrap;
     }
   }
   .el-menu {

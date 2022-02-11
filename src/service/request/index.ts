@@ -7,7 +7,7 @@ import type { FDZRequestConfig, FDZRequestInterceptors } from "./types"
 import { ElLoading } from "element-plus"
 import { LoadingInstance } from "element-plus/lib/components/loading/src/loading"
 
-const DEFAULT_LOADING = true
+const DEFAULT_LOADING = false
 
 class FDZRequest {
   _instance: AxiosInstance

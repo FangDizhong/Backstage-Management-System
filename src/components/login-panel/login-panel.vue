@@ -1,7 +1,10 @@
 <template>
   <div class="login-panel">
-    <h1 class="title">ASK Online</h1>
-    <h4 class="title">Admin Login</h4>
+    <div class="title">
+      <h1>{{ loginTitle }}</h1>
+      <h4>{{ loginSubTitle }}</h4>
+    </div>
+
     <el-tabs type="border-card" stretch v-model="currentTab">
       <el-tab-pane name="account">
         <template #label>
@@ -22,13 +25,14 @@
         <LoginPhone ref="phoneRef" />
       </el-tab-pane>
     </el-tabs>
+
     <div class="account-control">
       <el-checkbox v-model="isKeepPassword">Remenber me</el-checkbox>
       <el-link type="info">Forget password?</el-link>
     </div>
-    <el-button class="login-btn" type="primary" @click="handleLoginClick"
-      >Login</el-button
-    >
+    <el-button class="login-btn" type="primary" @click="handleLoginClick">
+      Login
+    </el-button>
   </div>
 </template>
 
@@ -41,6 +45,16 @@ export default defineComponent({
   components: {
     LoginAccount,
     LoginPhone
+  },
+  props: {
+    loginTitle: {
+      type: String,
+      default: "CMS Demo"
+    },
+    loginSubTitle: {
+      type: String,
+      default: "Admin Login"
+    }
   },
   setup() {
     // 定义属性
@@ -73,7 +87,13 @@ export default defineComponent({
 .login-panel {
   width: 400px;
   .title {
-    text-align: center;
+    @apply text-center  py-5;
+    h1 {
+      @apply text-2xl font-bold  leading-10 text-blue-gray-600;
+    }
+    h4 {
+      @apply font-semibold  text-blue-gray-500;
+    }
   }
   .login-btn {
     width: 100%;

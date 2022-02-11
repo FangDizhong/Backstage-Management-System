@@ -1,10 +1,5 @@
 # Contents_Management_System
 
-## 项目代码和接口文件
-
-https://gitee.com/wu-fei11/vue3-ts-cms-final/tree/master
-https://documenter.getpostman.com/view/12347168/TzsfmQvw#6241f067-d7c4-4b1b-aebf-8c2d322813d3
-
 ## Project setup
 
 ```

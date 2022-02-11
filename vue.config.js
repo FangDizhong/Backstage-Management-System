@@ -99,7 +99,7 @@ module.exports = {
         autoInstall: true
       })
     ]
-  }
+  },
 
   // 配置方式3：箭头函数
   // configureWebpack: (config) => {
@@ -115,4 +115,12 @@ module.exports = {
   //   .set("@", path.resolve(__dirname,"src"))
   //   .set("components", "@/components")
   // }
+  chainWebpack: config => {
+    config
+      .plugin('html')
+      .tap(args => {
+        args[0].title= 'CMS Demo'
+        return args
+      })
+  }
 }

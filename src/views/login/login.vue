@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <login-panel />
+    <login-panel login-title="CMS Demo" login-sub-title="Using Vue 3 + TS" />
   </div>
 </template>
 
