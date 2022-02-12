@@ -9,10 +9,16 @@
       ref="pageContentRef"
       :contentTableConfig="contentTableConfig"
       :pageName="contentTableConfig.pageUrlName"
+      :searchInfo="searchInfo"
       @newDataBtnClick="handleNewDataBtnClick"
       @editBtnClick="handleEditBtnClick"
     />
-    <page-modal ref="pageModalRef" :modalFormConfig="modalFormConfigRef" />
+    <page-modal
+      ref="pageModalRef"
+      :modalFormConfig="modalFormConfigRef"
+      :formInitData="defaultInfo"
+      @confirmBtnClick="handleConfirmClick"
+    />
   </div>
 </template>
 
@@ -22,14 +28,20 @@ import { searchFormConfig } from "./config/search.config"
 import { contentTableConfig } from "./config/content.config"
 import { modalFormConfig } from "./config/modal.config"
 
+// hooks: 父组件处理子组件的函数·变量集合（当监听到另外的子组件的事件时）
 import { useSearchPageContent } from "@/hooks/useSearchPageContent"
-import { useModifyPageContent } from "@/hooks/useModifyPageContent"
+import { useModifyInPageModal } from "@/hooks/useModifyInPageModal"
 
 import { useStore } from "@/store"
 import { computed } from "vue"
 
-const [pageContentRef, handleResetClick, handleSearchClick] =
-  useSearchPageContent()
+const [
+  pageContentRef,
+  searchInfo,
+  handleResetClick,
+  handleSearchClick,
+  handleConfirmClick
+] = useSearchPageContent()
 
 // 1. determine whether "password" field need to be hidden
 const newDataBtnCallback = () => {
@@ -70,8 +82,8 @@ const modalFormConfigRef = computed(() => {
 })
 
 // 3. use hook, get common variables and function
-const [pageModalRef, handleNewDataBtnClick, handleEditBtnClick] =
-  useModifyPageContent(newDataBtnCallback, editBtnCallback)
+const [pageModalRef, defaultInfo, handleNewDataBtnClick, handleEditBtnClick] =
+  useModifyInPageModal(newDataBtnCallback, editBtnCallback)
 </script>
 
 <style scoped></style>

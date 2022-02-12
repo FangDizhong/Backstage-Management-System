@@ -65,7 +65,7 @@ declare module 'vue' {
     NavMenu: typeof import('./components/nav-menu/nav-menu.vue')['default']
     PageContent: typeof import('./components/page-content/src/page-content.vue')['default']
     PageModal: typeof import('./components/page-modal/src/page-modal.vue')['default']
-    'PageModal copy': typeof import('./components/page-modal/src/page-modal copy.vue')['default']
+    PageModalAnotherMethod: typeof import('./components/page-modal/src/page-modal-another-method.vue')['default']
     PageSearch: typeof import('./components/page-search/src/page-search.vue')['default']
     UserInfo: typeof import('./components/base-ui/user-info/src/user-info.vue')['default']
   }

@@ -1,13 +1,16 @@
 import { IForm } from "@/components/base-ui/basic-form"
-import { contentTableConfig } from "./content.config"
+
+const pageName = "User"
 
 export const searchFormConfig: IForm = {
+  pageName: `${pageName}`,
+  pageUrlName: `${pageName}s`,
   formItems: [
     {
       field: "name",
       type: "input",
-      label: "User Name",
-      placeholder: "Enter user name"
+      label: `${pageName} Name`,
+      placeholder: `Enter ${pageName.toLowerCase()} name`
     },
     {
       field: "realname",

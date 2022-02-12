@@ -133,14 +133,14 @@ const systemModule: Module<ISystemState, IRootState> = {
       const pageUrl = `/${pageName.toLowerCase()}/${dataID}`
       await editPageDataRequest(pageUrl, editData)
 
-      // 3 重新请求pageList
-      dispatch("getPageListAction", {
-        pageName,
-        queryInfo: {
-          offset: 0,
-          size: 10
-        }
-      })
+      // // 3 重新请求pageList
+      // dispatch("getPageListAction", {
+      //   pageName,
+      //   queryInfo: {
+      //     offset: 0,
+      //     size: 10
+      //   }
+      // })
     },
 
     async addPageRowDataAction({ dispatch }, payload: any) {
@@ -148,14 +148,14 @@ const systemModule: Module<ISystemState, IRootState> = {
       const pageUrl = `/${pageName.toLowerCase()}`
       await addPageDataRequest(pageUrl, newData)
 
-      // 3 重新请求pageList
-      dispatch("getPageListAction", {
-        pageName,
-        queryInfo: {
-          offset: 0,
-          size: 10
-        }
-      })
+      // // 3 重新请求pageList
+      // dispatch("getPageListAction", {
+      //   pageName,
+      //   queryInfo: {
+      //     offset: 0,
+      //     size: 10
+      //   }
+      // })
     }
   }
 }

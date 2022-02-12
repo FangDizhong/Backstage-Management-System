@@ -1,5 +1,7 @@
 import { IForm } from "@/components/base-ui/basic-form"
+
 const pageName = "User"
+
 export const modalFormConfig: IForm = {
   pageName: `${pageName}`,
   pageUrlName: `${pageName}s`,

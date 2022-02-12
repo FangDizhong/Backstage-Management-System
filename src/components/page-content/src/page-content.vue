@@ -93,6 +93,10 @@ const props = defineProps({
   pageName: {
     type: String,
     required: true
+  },
+  searchInfo: {
+    type: Object,
+    default: () => ({})
   }
 })
 // 定义emit event 给parent component
@@ -100,44 +104,63 @@ const emits = defineEmits(["newDataBtnClick", "editBtnClick"])
 // 获取table数据
 const store = useStore()
 // 获取操作权限
-const isCreate = useVerifyPermission(props.pageName, "create")
-const isUpdate = useVerifyPermission(props.pageName, "update")
-const isDelete = useVerifyPermission(props.pageName, "delete")
-const isQuery = useVerifyPermission(props.pageName, "query")
+const isCreate = useVerifyPermission(
+  props.contentTableConfig.pageUrlName,
+  "create"
+)
+const isUpdate = useVerifyPermission(
+  props.contentTableConfig.pageUrlName,
+  "update"
+)
+const isDelete = useVerifyPermission(
+  props.contentTableConfig.pageUrlName,
+  "delete"
+)
+const isQuery = useVerifyPermission(
+  props.contentTableConfig.pageUrlName,
+  "query"
+)
+
+const searchInfo = ref({})
 
 // 1. 每次paginationInfo传来的值改动，重新发送获取table数据的请求。
 // getpageContentData默认把当前组件pageInfo的值作为offset和size的值
 const pageInfo = ref({ currentPage: 1, pageSize: 10 })
 watch(pageInfo, () => getPageContentData())
+watch(
+  () => props.searchInfo,
+  () => console.log("searchInfo Changed")
+)
 
 // 2. 传入查询信息给后端api以获取相应条件的数据,默认为无查询条件
-const getPageContentData = (queryInfo: any = {}) => {
+const getPageContentData = () => {
   if (!isQuery) {
     return alert(
-      `Sorry! You don't have permission to query for ${props.pageName.toLowerCase()}.`
+      `Sorry! You don't have permission to query for ${props.contentTableConfig.pageUrlName.toLowerCase()}.`
     )
   }
   // 触发store里的action里的方法，
   // 去提交到mutation，再修改到state
   store.dispatch("system/getPageListAction", {
     // pageUrl: "/users/list",
-    pageName: props.pageName,
+    pageName: props.contentTableConfig.pageUrlName,
     queryInfo: {
       offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
       size: pageInfo.value.pageSize,
-      ...queryInfo
+      ...props.searchInfo
     }
   })
+  console.log(props.searchInfo)
 }
 // setup 只在每次加载时调用一次
 getPageContentData()
 
 // 3. 从store根据pageName获取相应table数据
 const pageDatalist = computed(() =>
-  store.getters[`system/pageListData`](props.pageName)
+  store.getters[`system/pageListData`](props.contentTableConfig.pageUrlName)
 )
 const pageDataCount = computed(() =>
-  store.getters[`system/pageListCount`](props.pageName)
+  store.getters[`system/pageListCount`](props.contentTableConfig.pageUrlName)
 )
 
 // 4. 获取其他动态插槽名称js数组filter()高阶函数
@@ -168,27 +191,30 @@ const handleSelectionChange = (value: any) => {
 const handleDeleteClick = (rowData: any) => {
   store.dispatch("system/deletePageRowDataAction", {
     // pageUrl: "/users/list",
-    pageName: props.pageName,
+    pageName: props.contentTableConfig.pageUrlName,
     dataID: rowData.id,
     queryInfo: {
       offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
-      size: pageInfo.value.pageSize
-      // ...queryInfo
+      size: pageInfo.value.pageSize,
+      ...props.searchInfo
     }
   })
 }
 
 const handleEditClick = (rowData: any) => {
+  const btnName = `Edit ${props.contentTableConfig.pageName}`
   // different from DeleteClick:
   // EditClick emit event through parent component, into page-modal
-  emits("editBtnClick", rowData)
+  emits("editBtnClick", rowData, btnName)
 }
 const handleNewDataClick = () => {
-  emits("newDataBtnClick")
+  const btnName = `New ${props.contentTableConfig.pageName}`
+  emits("newDataBtnClick", btnName)
 }
 // 暴露给parent component 供 template Ref引用
 defineExpose({
-  getPageContentData
+  getPageContentData,
+  searchInfo
 })
 </script>
 

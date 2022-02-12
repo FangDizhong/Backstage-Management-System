@@ -1,6 +1,7 @@
 const pageName = "User"
 
 export const contentTableConfig = {
+  pageName: `${pageName}`,
   pageUrlName: `${pageName}s`,
   tableTitle: `${pageName} List`,
   tableHandlerBtn: `New ${pageName}`,
