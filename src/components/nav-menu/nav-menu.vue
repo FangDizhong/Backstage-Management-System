@@ -57,7 +57,7 @@ import { useRouter, useRoute } from "vue-router"
 // import { useStore } from "vuex"
 // 用自己封装的useStore函数解决Vuex的TS兼容问题
 import { useStore } from "@/store"
-import { mapPathToMenu } from "@/utils/map-to-routes"
+import { mapPathToMenu } from "@/utils/map-menus"
 
 const props = defineProps({
   collapse: {

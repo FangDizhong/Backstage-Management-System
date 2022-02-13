@@ -1,18 +1,16 @@
 import { IForm } from "@/components/base-ui/basic-form"
 
+const pageName = "Role"
+
 export const searchFormConfig: IForm = {
+  pageName: `${pageName}`,
+  pageUrlName: `${pageName}`,
   formItems: [
-    // {
-    //   field: "id",
-    //   type: "input",
-    //   label: "user ID",
-    //   placeholder: "Enter user ID"
-    // },
     {
       field: "name",
       type: "input",
-      label: "Role Name",
-      placeholder: "Enter role name"
+      label: `${pageName} Name`,
+      placeholder: `Enter ${pageName.toLowerCase()} name`
     },
     {
       field: "intro",

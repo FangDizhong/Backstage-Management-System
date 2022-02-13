@@ -14,7 +14,8 @@ const store = createStore<IRootState>({
       name: "xhsensei",
       age: 29,
       entireDepartmentList: [],
-      entireRoleList: []
+      entireRoleList: [],
+      entireMenuList: []
     }
   },
   // 修改状态，使用时通过commit修改方法
@@ -24,6 +25,9 @@ const store = createStore<IRootState>({
     },
     changeEntireRole(state, list) {
       state.entireRoleList = list
+    },
+    changeEntireMenu(state, list) {
+      state.entireMenuList = list
     }
   },
   // 存放计算状态里的值之后的数据
@@ -38,13 +42,19 @@ const store = createStore<IRootState>({
       })
       // 从data取出list重命名为departmentList
       const { list: departmentList } = departmentResult.data
+
       const roleResult = await getPageDataRequest("/role/list", {
         offset: 0,
         size: 1000
       })
       const { list: roleList } = roleResult.data
+
+      const menuResult = await getPageDataRequest("menu/list", {})
+      const { list: menuList } = menuResult.data
+
       commit("changeEntireDepartment", departmentList)
       commit("changeEntireRole", roleList)
+      commit("changeEntireMenu", menuList)
     }
   },
   // 模块化开发

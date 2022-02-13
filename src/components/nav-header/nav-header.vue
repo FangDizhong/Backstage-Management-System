@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { useStore } from "@/store"
 import { computed } from "vue"
-import { mapPathToBreadcrumbs } from "@/utils/map-to-routes"
+import { mapPathToBreadcrumbs } from "@/utils/map-menus"
 import { useRoute } from "vue-router"
 
 // store

@@ -9,8 +9,8 @@ export const modalFormConfig: IForm = {
     {
       field: "name",
       type: "input",
-      label: "User Name",
-      placeholder: "Enter user name"
+      label: `${pageName} Name`,
+      placeholder: `Enter ${pageName.toLowerCase()} name`
     },
     {
       field: "realname",

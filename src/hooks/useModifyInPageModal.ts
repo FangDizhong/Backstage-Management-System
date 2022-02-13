@@ -2,7 +2,7 @@ import { ref } from "vue"
 import PageModal from "@/components/page-modal"
 
 // 函数类型，没有返回值
-type CallbackFn = () => void
+type CallbackFn = (item?: any) => void
 
 export function useModifyInPageModal(
   newDataBtnCB?: CallbackFn,
@@ -50,7 +50,7 @@ export function useModifyInPageModal(
       pageModalRef.value.isDialogVisible = true
     }
     // 当前者没有值时返回false，当前者有值时返回后者，也就是调用editBtnCB()
-    editBtnCB && editBtnCB()
+    editBtnCB && editBtnCB(rowData)
   }
   return [
     pageModalRef,

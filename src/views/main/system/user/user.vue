@@ -34,10 +34,12 @@ import { useModifyInPageModal } from "@/hooks/useModifyInPageModal"
 import { useStore } from "@/store"
 import { computed } from "vue"
 
+// 1 Hooks handling page-search component
 const [pageContentRef, handleResetClick, handleSearchClick] =
   useSearchPageContent()
 
-// 1. determine whether "password" field need to be hidden
+// 2. Callbacks & Hooks handling page-modal component
+// determine whether "password" field need to be hidden
 const newDataBtnCallback = () => {
   const passwordItem = modalFormConfig.formItems.find(
     (item) => item.field === "password"
@@ -51,7 +53,15 @@ const editBtnCallback = () => {
   passwordItem!.isHidden = true
 }
 
-// 2 dynamically add DepartmentList & RoleList into modalConfig
+const [
+  pageModalRef,
+  defaultInfo,
+  pageQueryInfo,
+  handleNewDataBtnClick,
+  handleEditBtnClick
+] = useModifyInPageModal(newDataBtnCallback, editBtnCallback)
+
+// 3 dynamically add DepartmentList & RoleList into modalConfig
 const store = useStore()
 // department & role List maynot ready when User page setup. So,
 // use computed() to run the function inside everytime the store.state Updated
@@ -74,15 +84,6 @@ const modalFormConfigRef = computed(() => {
   })
   return modalFormConfig
 })
-
-// 3. use hook, get common variables and function
-const [
-  pageModalRef,
-  defaultInfo,
-  pageQueryInfo,
-  handleNewDataBtnClick,
-  handleEditBtnClick
-] = useModifyInPageModal(newDataBtnCallback, editBtnCallback)
 </script>
 
 <style scoped></style>

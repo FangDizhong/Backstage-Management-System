@@ -7,7 +7,7 @@ import {
 } from "@/service/login/login"
 import localCache from "@/utils/cache"
 import router from "@/router"
-import { mapMenusToPermissions, mapMenusToRoutes } from "@/utils/map-to-routes"
+import { mapMenusToPermissions, mapMenusToRoutes } from "@/utils/map-menus"
 
 import { IAccount } from "@/service/login/types"
 import { ILoginState } from "./types"

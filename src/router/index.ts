@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
 // import Home from "../views/Home.vue";
 
 import localCache from "@/utils/cache"
-import { firstMenu } from "@/utils/map-to-routes"
+import { firstMenu } from "@/utils/map-menus"
 
 const routes: Array<RouteRecordRaw> = [
   {
