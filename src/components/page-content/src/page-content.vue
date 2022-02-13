@@ -93,10 +93,6 @@ const props = defineProps({
   pageName: {
     type: String,
     required: true
-  },
-  searchInfo: {
-    type: Object,
-    default: () => ({})
   }
 })
 // 定义emit event 给parent component
@@ -121,19 +117,13 @@ const isQuery = useVerifyPermission(
   "query"
 )
 
-const searchInfo = ref({})
-
 // 1. 每次paginationInfo传来的值改动，重新发送获取table数据的请求。
 // getpageContentData默认把当前组件pageInfo的值作为offset和size的值
 const pageInfo = ref({ currentPage: 1, pageSize: 10 })
 watch(pageInfo, () => getPageContentData())
-watch(
-  () => props.searchInfo,
-  () => console.log("searchInfo Changed")
-)
 
 // 2. 传入查询信息给后端api以获取相应条件的数据,默认为无查询条件
-const getPageContentData = () => {
+const getPageContentData = (searchInfo?: any) => {
   if (!isQuery) {
     return alert(
       `Sorry! You don't have permission to query for ${props.contentTableConfig.pageUrlName.toLowerCase()}.`
@@ -147,10 +137,9 @@ const getPageContentData = () => {
     queryInfo: {
       offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
       size: pageInfo.value.pageSize,
-      ...props.searchInfo
+      ...searchInfo
     }
   })
-  console.log(props.searchInfo)
 }
 // setup 只在每次加载时调用一次
 getPageContentData()
@@ -195,8 +184,8 @@ const handleDeleteClick = (rowData: any) => {
     dataID: rowData.id,
     queryInfo: {
       offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
-      size: pageInfo.value.pageSize,
-      ...props.searchInfo
+      size: pageInfo.value.pageSize
+      // ...searchInfo
     }
   })
 }
@@ -205,16 +194,15 @@ const handleEditClick = (rowData: any) => {
   const btnName = `Edit ${props.contentTableConfig.pageName}`
   // different from DeleteClick:
   // EditClick emit event through parent component, into page-modal
-  emits("editBtnClick", rowData, btnName)
+  emits("editBtnClick", rowData, btnName, pageInfo)
 }
 const handleNewDataClick = () => {
   const btnName = `New ${props.contentTableConfig.pageName}`
-  emits("newDataBtnClick", btnName)
+  emits("newDataBtnClick", btnName, pageInfo)
 }
 // 暴露给parent component 供 template Ref引用
 defineExpose({
-  getPageContentData,
-  searchInfo
+  getPageContentData
 })
 </script>
 

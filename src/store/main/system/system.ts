@@ -129,33 +129,27 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
 
     async editPageRowDataAction({ dispatch }, payload: any) {
-      const { pageName, dataID, editData } = payload
+      const { pageName, dataID, editData, queryInfo } = payload
       const pageUrl = `/${pageName.toLowerCase()}/${dataID}`
       await editPageDataRequest(pageUrl, editData)
 
-      // // 3 重新请求pageList
-      // dispatch("getPageListAction", {
-      //   pageName,
-      //   queryInfo: {
-      //     offset: 0,
-      //     size: 10
-      //   }
-      // })
+      // 3 重新请求pageList
+      dispatch("getPageListAction", {
+        pageName,
+        queryInfo
+      })
     },
 
     async addPageRowDataAction({ dispatch }, payload: any) {
-      const { pageName, newData } = payload
+      const { pageName, newData, queryInfo } = payload
       const pageUrl = `/${pageName.toLowerCase()}`
       await addPageDataRequest(pageUrl, newData)
 
-      // // 3 重新请求pageList
-      // dispatch("getPageListAction", {
-      //   pageName,
-      //   queryInfo: {
-      //     offset: 0,
-      //     size: 10
-      //   }
-      // })
+      // 3 重新请求pageList
+      dispatch("getPageListAction", {
+        pageName,
+        queryInfo
+      })
     }
   }
 }

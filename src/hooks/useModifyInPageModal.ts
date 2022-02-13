@@ -10,12 +10,14 @@ export function useModifyInPageModal(
 ) {
   // 父组件默认信息,用来接收NewBtn和EditBtn初始数据
   const defaultInfo = ref({})
+  const pageQueryInfo = ref({})
   // typeof把LoginAccount对象转成实例，InstanceType把实例转成类型
   const pageModalRef = ref<InstanceType<typeof PageModal>>()
 
-  const handleNewDataBtnClick = (btnName: string) => {
+  const handleNewDataBtnClick = (btnName: string, pageInfo: any) => {
     // New Btn don't need form Init Data
     defaultInfo.value = {}
+    pageQueryInfo.value = pageInfo.value
 
     if (pageModalRef.value) {
       // // reset form value in page-modal (formData will also change)
@@ -32,8 +34,9 @@ export function useModifyInPageModal(
     newDataBtnCB && newDataBtnCB()
   }
 
-  const handleEditBtnClick = (rowData: any, btnName: string) => {
+  const handleEditBtnClick = (rowData: any, btnName: string, pageInfo: any) => {
     defaultInfo.value = { ...rowData }
+    pageQueryInfo.value = pageInfo.value
 
     if (pageModalRef.value) {
       // // page-modal表单里存在的formdata才绑定新的值  (formData will also change)
@@ -49,5 +52,11 @@ export function useModifyInPageModal(
     // 当前者没有值时返回false，当前者有值时返回后者，也就是调用editBtnCB()
     editBtnCB && editBtnCB()
   }
-  return [pageModalRef, defaultInfo, handleNewDataBtnClick, handleEditBtnClick]
+  return [
+    pageModalRef,
+    defaultInfo,
+    pageQueryInfo,
+    handleNewDataBtnClick,
+    handleEditBtnClick
+  ]
 }

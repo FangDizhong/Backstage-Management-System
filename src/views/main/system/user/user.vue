@@ -9,7 +9,6 @@
       ref="pageContentRef"
       :contentTableConfig="contentTableConfig"
       :pageName="contentTableConfig.pageUrlName"
-      :searchInfo="searchInfo"
       @newDataBtnClick="handleNewDataBtnClick"
       @editBtnClick="handleEditBtnClick"
     />
@@ -17,7 +16,7 @@
       ref="pageModalRef"
       :modalFormConfig="modalFormConfigRef"
       :formInitData="defaultInfo"
-      @confirmBtnClick="handleConfirmClick"
+      :pageQueryInfo="pageQueryInfo"
     />
   </div>
 </template>
@@ -35,13 +34,8 @@ import { useModifyInPageModal } from "@/hooks/useModifyInPageModal"
 import { useStore } from "@/store"
 import { computed } from "vue"
 
-const [
-  pageContentRef,
-  searchInfo,
-  handleResetClick,
-  handleSearchClick,
-  handleConfirmClick
-] = useSearchPageContent()
+const [pageContentRef, handleResetClick, handleSearchClick] =
+  useSearchPageContent()
 
 // 1. determine whether "password" field need to be hidden
 const newDataBtnCallback = () => {
@@ -82,8 +76,13 @@ const modalFormConfigRef = computed(() => {
 })
 
 // 3. use hook, get common variables and function
-const [pageModalRef, defaultInfo, handleNewDataBtnClick, handleEditBtnClick] =
-  useModifyInPageModal(newDataBtnCallback, editBtnCallback)
+const [
+  pageModalRef,
+  defaultInfo,
+  pageQueryInfo,
+  handleNewDataBtnClick,
+  handleEditBtnClick
+] = useModifyInPageModal(newDataBtnCallback, editBtnCallback)
 </script>
 
 <style scoped></style>

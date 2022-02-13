@@ -33,6 +33,10 @@ const props = defineProps({
   formInitData: {
     type: Object,
     default: () => ({})
+  },
+  pageQueryInfo: {
+    type: Object,
+    default: () => ({})
   }
 })
 
@@ -61,19 +65,23 @@ const handleConfirmClick = () => {
     // newData Btn
     store.dispatch("system/addPageRowDataAction", {
       pageName: props.modalFormConfig.pageUrlName,
-      newData: { ...formData.value }
+      newData: { ...formData.value },
+      queryInfo: { offset: 0, size: props.pageQueryInfo["pageSize"] }
     })
   } else {
     // Edit Btn
     store.dispatch("system/editPageRowDataAction", {
       pageName: props.modalFormConfig.pageUrlName,
       dataID: props.formInitData.id,
-      editData: { ...formData.value }
+      editData: { ...formData.value },
+      queryInfo: {
+        offset:
+          (props.pageQueryInfo["currentPage"] - 1) *
+          props.pageQueryInfo["pageSize"],
+        size: props.pageQueryInfo["pageSize"]
+      }
     })
   }
-
-  // emit event, let page-content refresh again
-  emit("confirmBtnClick")
 }
 
 // 暴露给parent component 供 template Ref引用
