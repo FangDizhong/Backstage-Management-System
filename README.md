@@ -1,5 +1,19 @@
 # Contents_Management_System
 
+## Features
+
+- ⚡️ [Vue 3](https://github.com/vuejs/vue-next)
+
+- 🔥 [TypeScript]
+
+- 📦 [Element-Plus](https://github.com/element-plus/element-plus)
+
+- 🎨 [Windi CSS](https://github.com/windicss/windicss) - next generation utility-first CSS framework
+
+- 💪 Use the [new `<script setup>` syntax](https://github.com/vuejs/rfcs/pull/227)
+
+- 📥 [APIs auto importing](https://github.com/antfu/unplugin-auto-import) - use Composition API and others directly
+
 ## Project setup
 
 ```
