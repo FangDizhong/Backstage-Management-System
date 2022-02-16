@@ -52,6 +52,8 @@ export function useModifyInPageModal(
     // 当前者没有值时返回false，当前者有值时返回后者，也就是调用editBtnCB()
     editBtnCB && editBtnCB(rowData)
   }
+  // return 数组时，使用时必须按顺序取出
+  // return 对象时，使用时可以只用其中一个{setOptions}=useEchart()
   return [
     pageModalRef,
     defaultInfo,

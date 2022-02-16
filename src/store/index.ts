@@ -2,6 +2,7 @@ import { createStore, Store, useStore as useVuexStore } from "vuex"
 
 import login from "./login/login"
 import system from "./main/system/system"
+import dashboard from "./main/analysis/dashboard"
 
 import { getPageDataRequest } from "@/service/main/system/system"
 
@@ -60,7 +61,8 @@ const store = createStore<IRootState>({
   // 模块化开发
   modules: {
     login,
-    system
+    system,
+    dashboard
   }
 })
 
